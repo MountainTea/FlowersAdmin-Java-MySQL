@@ -2,8 +2,9 @@
 Simple flower import and export.  
   
   
-專案結構
+ ```專案結構
 =
+階層
 flowersadmin/
 └── src/
     ├── chart/
@@ -68,7 +69,7 @@ flowersadmin/
     └── Util/
         ├── DBUtil.java                // 資料庫連線與工具類
         └── Constants.java             // 常數定義與配置
-  
+   ```
   
 內容2
 =
