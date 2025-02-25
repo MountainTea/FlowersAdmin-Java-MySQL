@@ -22,6 +22,11 @@ flowersadmin/
     │   │       Register.java      (會員註冊)
     │   │       Home.java          (會員首頁)
     │   │       MyOrdersFrame.java (我的訂單列表)
+    │   │       orderform/       [訂單流程]
+    │   │             MemberOrderDetailDialog.java (會員訂單明細)
+    │   │             Step1Basic.java              (訂單基本資料確認)
+    │   │             Step2Detail.java             (訂單明細編輯)
+    │   │             Step3Confirm.java            (訂單確認下單)
     │   └── chart/  [圖表]
     │           StockPie.java   (圖例)
     │
@@ -33,6 +38,8 @@ flowersadmin/
     │       ProductSales.java   (產品銷售彙總)
     │       Products.java       (產品)
     │       Supplier.java       (廠商)
+    │       OrderFormData.java  (訂單資料暫存)
+    │       OrderDetailData.java (訂單明細資料)
     │
     ├── dao/  [功能化]
     │       AdminersDao.java       (內部人員)
@@ -78,7 +85,6 @@ flowersadmin/
     └── util/  [其他資源]
             Tool.java        (輔助工具)
             DbConnection.java (資料庫連線)
-
 
    ```
   
