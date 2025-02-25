@@ -8,6 +8,7 @@
   詳細介紹請參考 [簡易說明書(.PDF)](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/pptpdf/%E7%B0%A1%E6%98%93%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf "簡易說明書.pdf")
 
 
+---
 
 
 ## 技術
@@ -17,6 +18,7 @@
 - ### **開發環境：** Eclipse IDE for Java Developers (2024-12)
 
 
+---
   
   
 ## 專案結構
@@ -105,6 +107,11 @@ flowersadmin/
 
    ```
   
-內容2
-=
-內容
+---
+
+
+## 下載資源
+
+- ### **資料庫：** [下載](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/tree/main/sql "MySQL資料表下載")
+- ### **執行檔：** [下載](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/tree/main/jar "(.jar)下載")
+ ※ 請將資料表(.sql)匯入再行啟動程式(.jar)。
