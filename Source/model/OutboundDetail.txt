@@ -1,0 +1,51 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class OutboundDetail {
+    private int id;
+    private String outNo;
+    private String proNo;
+    private String proName;
+    private int unitPrice;
+    private int quantity;
+    private String note;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+
+    public OutboundDetail() {}
+
+    public OutboundDetail(int id, String outNo, String proNo, String proName, int unitPrice, int quantity, String note, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.outNo = outNo;
+        this.proNo = proNo;
+        this.proName = proName;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.note = note;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+
+    public int getId() { return id; }
+    public String getOutNo() { return outNo; }
+    public String getProNo() { return proNo; }
+    public String getProName() { return proName; }
+    public int getUnitPrice() { return unitPrice; }
+    public int getQuantity() { return quantity; }
+    public String getNote() { return note; }
+    public Timestamp getCreatedAt() { return createdAt; }
+    public Timestamp getUpdatedAt() { return updatedAt; }
+
+
+    public void setId(int id) { this.id = id; }
+    public void setOutNo(String outNo) { this.outNo = outNo; }
+    public void setProNo(String proNo) { this.proNo = proNo; }
+    public void setProName(String proName) { this.proName = proName; }
+    public void setUnitPrice(int unitPrice) { this.unitPrice = unitPrice; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setNote(String note) { this.note = note; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+    public void setUpdatedAt(Timestamp updatedAt) { this.updatedAt = updatedAt; }
+}

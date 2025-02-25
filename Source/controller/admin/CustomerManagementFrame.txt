@@ -1,0 +1,32 @@
+顧客管理
+package controller.admin;
+
+// 新增
+btnAdd = new JButton("新增");
+btnAdd.addActionListener(e -> openCustomerForm(null));
+pnlButtons.add(btnAdd);
+
+// 修改
+btnEdit = new JButton("修改");
+btnEdit.addActionListener(e -> {
+    int selectedRow = tblCustomers.getSelectedRow();
+    if (selectedRow != -1) {
+        int modelRow = tblCustomers.convertRowIndexToModel(selectedRow);
+        Customers selectedCustomer = tableModel.getCustomerAt(modelRow);
+        openCustomerForm(selectedCustomer);
+    }
+});
+pnlButtons.add(btnEdit);
+
+// 切換狀態
+btnToggleState = new JButton("停用/啟用");
+btnToggleState.addActionListener(e -> toggleCustomerState());
+pnlButtons.add(btnToggleState);
+
+// 返回
+btnBack = new JButton("返回");
+btnBack.addActionListener(e -> {
+    new AdminHome(currentAdmin).setVisible(true);
+    dispose();
+});
+pnlButtons.add(btnBack);

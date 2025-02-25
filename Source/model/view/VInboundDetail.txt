@@ -1,0 +1,115 @@
+package model.view;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+public class VInboundDetail {
+    private int id;
+    private String inbNo;
+    private Date inbDate;        
+    private String supName;
+    private int proState;
+    private int proType;
+    private String proNo;
+    private String proName;
+    private int unitPrice;
+    private int quantity;
+    private String note;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+
+    public VInboundDetail() {}
+
+    // Getter & Setter
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getInbNo() {
+        return inbNo;
+    }
+    public void setInbNo(String inbNo) {
+        this.inbNo = inbNo;
+    }
+
+    public Date getInbDate() {
+        return inbDate;
+    }
+    public void setInbDate(Date inbDate) {
+        this.inbDate = inbDate;
+    }
+
+    public String getSupName() {
+        return supName;
+    }
+    public void setSupName(String supName) {
+        this.supName = supName;
+    }
+
+    public int getProState() {
+        return proState;
+    }
+    public void setProState(int proState) {
+        this.proState = proState;
+    }
+
+    public int getProType() {
+        return proType;
+    }
+    public void setProType(int proType) {
+        this.proType = proType;
+    }
+
+    public String getProNo() {
+        return proNo;
+    }
+    public void setProNo(String proNo) {
+        this.proNo = proNo;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getNote() {
+        return note;
+    }
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}

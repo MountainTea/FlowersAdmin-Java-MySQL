@@ -1,0 +1,66 @@
+後臺首頁
+package controller.admin;
+
+// 員工管理
+btnManageAdminers = new JButton("員工管理");
+btnManageAdminers.addActionListener(e -> {
+    new AdminerManagementFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnManageAdminers);
+
+// 管理顧客
+btnManageCustomers = new JButton("管理顧客");
+btnManageCustomers.addActionListener(e -> {
+    new CustomerManagementFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnManageCustomers);
+
+// 訂單處理
+btnManageOrders = new JButton("訂單處理");
+btnManageOrders.addActionListener(e -> {
+    new OutboundOrderMainFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnManageOrders);
+
+// 管理產品
+btnManageProducts = new JButton("管理產品");
+btnManageProducts.addActionListener(e -> {
+    new ProductListFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnManageProducts);
+
+// 進貨管理
+btnInbound = new JButton("進貨管理");
+btnInbound.addActionListener(e -> {
+    new InboundManagementFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnInbound);
+
+// 庫存檢視
+btnInventory = new JButton("庫存檢視");
+btnInventory.addActionListener(e -> {
+    new InventoryManagementFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnInventory);
+
+// 管理供應商
+btnManageSuppliers = new JButton("管理供應商");
+btnManageSuppliers.addActionListener(e -> {
+    new SupplierManagementFrame(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnManageSuppliers);
+
+// 登出
+btnLogout = new JButton("登出");
+btnLogout.addActionListener(e -> {
+    new AdminLogin().setVisible(true);
+    dispose();
+});
+contentPane.add(btnLogout);

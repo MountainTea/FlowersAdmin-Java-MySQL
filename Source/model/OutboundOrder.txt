@@ -1,0 +1,127 @@
+package model;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+public class OutboundOrder {
+    private int id;
+    private String outNo;       
+    private String cusUsername;  
+    private Date orderDate;
+    private int totalAmount;
+    private String note;
+    private String maintainedBy;  
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private int shipStatus;       // 0=未出貨, 1=已出貨
+    private String cusName;
+    private String cusPhone;
+    private String cusAddress;  
+
+    public OutboundOrder() {}
+
+    public OutboundOrder(int id, String outNo, String cusUsername, Date orderDate, int totalAmount,
+                         String note, String maintainedBy, Timestamp createdAt, Timestamp updatedAt,
+                         int shipStatus, String cusName, String cusPhone) {
+        this.id = id;
+        this.outNo = outNo;
+        this.cusUsername = cusUsername;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.note = note;
+        this.maintainedBy = maintainedBy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.shipStatus = shipStatus;
+        this.cusName = cusName;
+        this.cusPhone = cusPhone;
+    }
+
+    // Getter & Setter for the new fields
+    public String getCusName() {
+        return cusName;
+    }
+
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
+
+    public String getCusPhone() {
+        return cusPhone;
+    }
+
+    public void setCusPhone(String cusPhone) {
+        this.cusPhone = cusPhone;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getOutNo() {
+        return outNo;
+    }
+    public void setOutNo(String outNo) {
+        this.outNo = outNo;
+    }
+    public String getCusUsername() {
+        return cusUsername;
+    }
+    public void setCusUsername(String cusUsername) {
+        this.cusUsername = cusUsername;
+    }
+    public Date getOrderDate() {
+        return orderDate;
+    }
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+    public String getNote() {
+        return note;
+    }
+    public void setNote(String note) {
+        this.note = note;
+    }
+    public String getMaintainedBy() {
+        return maintainedBy;
+    }
+    public void setMaintainedBy(String maintainedBy) {
+        this.maintainedBy = maintainedBy;
+    }
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    public int getShipStatus() {
+        return shipStatus;
+    }
+    public void setShipStatus(int shipStatus) {
+        this.shipStatus = shipStatus;
+    }
+
+
+    public String getCusAddress() {
+        return cusAddress;
+    }
+
+    public void setCusAddress(String cusAddress) {
+        this.cusAddress = cusAddress;
+    }
+}

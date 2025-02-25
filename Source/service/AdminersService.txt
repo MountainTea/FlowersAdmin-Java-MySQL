@@ -1,0 +1,21 @@
+package service;
+
+import java.util.List;
+import model.Adminers;
+import exception.ServiceException;
+
+public interface AdminersService {
+    /* Read */
+    List<Adminers> getAllAdminers() throws ServiceException;
+    Adminers getAdminersById(int id) throws ServiceException;
+    Adminers getAdminersByUsername(String admUsername) throws ServiceException;
+    
+    /* Create */
+    boolean addAdminers(Adminers adminers) throws ServiceException;
+    
+    /* Update */
+    boolean updateAdminers(Adminers adminers) throws ServiceException;
+    
+    /* Delete */
+    boolean removeAdminers(int id) throws ServiceException;
+}

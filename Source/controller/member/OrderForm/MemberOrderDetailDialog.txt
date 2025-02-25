@@ -1,0 +1,12 @@
+會員訂單明細
+package controller.member.OrderForm;
+
+// 取消訂單
+btnCancelOrder = new JButton("取消訂單");
+btnCancelOrder.addActionListener(e -> onCancelOrder());
+btnPanel.add(btnCancelOrder);
+
+// 關閉
+JButton btnClose = new JButton("關閉");
+btnClose.addActionListener(e -> dispose());
+btnPanel.add(btnClose);

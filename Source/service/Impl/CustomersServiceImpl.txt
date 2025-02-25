@@ -1,0 +1,75 @@
+package service.impl;
+
+import dao.CustomersDao;
+import dao.impl.CustomersDaoImpl;
+import exception.ServiceException;
+import java.util.List;
+import model.Customers;
+import service.CustomersService;
+
+public class CustomersServiceImpl implements CustomersService {
+
+    private CustomersDao customersDao;
+    
+    public CustomersServiceImpl() {
+        this.customersDao = new CustomersDaoImpl();
+    }
+    
+    public CustomersServiceImpl(CustomersDao customersDao) {
+        this.customersDao = customersDao;
+    }
+    
+    @Override
+    public List<Customers> getAllCustomers() throws ServiceException {
+        try {
+            return customersDao.getAllCustomers();
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving all customers", e);
+        }
+    }
+    
+    @Override
+    public Customers getCustomersById(int id) throws ServiceException {
+        try {
+            return customersDao.getCustomersById(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving customer by id: " + id, e);
+        }
+    }
+    
+    @Override
+    public Customers getCustomersByUsername(String cusUsername) throws ServiceException {
+        try {
+            return customersDao.getCustomersByUsername(cusUsername);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving customer by username: " + cusUsername, e);
+        }
+    }
+    
+    @Override
+    public boolean addCustomers(Customers customers) throws ServiceException {
+        try {
+            return customersDao.insertCustomers(customers);
+        } catch (Exception e) {
+            throw new ServiceException("Error adding customer", e);
+        }
+    }
+    
+    @Override
+    public boolean updateCustomers(Customers customers) throws ServiceException {
+        try {
+            return customersDao.updateCustomers(customers);
+        } catch (Exception e) {
+            throw new ServiceException("Error updating customer with id: " + customers.getId(), e);
+        }
+    }
+    
+    @Override
+    public boolean removeCustomers(int id) throws ServiceException {
+        try {
+            return customersDao.deleteCustomers(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error deleting customer with id: " + id, e);
+        }
+    }
+}

@@ -1,0 +1,61 @@
+進、出貨及庫存圖
+
+package controller.chart;
+
+List<VInventoryCombined> dataList;
+try {
+    dataList = inventoryDao.findAll();
+} catch (ServiceException e) {
+    dataList = new ArrayList<>();
+}
+
+// 建立兩個資料集，柱狀圖用於進貨數與出貨數，折線圖用於現有庫存
+DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
+DefaultCategoryDataset lineDataset = new DefaultCategoryDataset();
+for (VInventoryCombined vic : dataList) {
+    String category = vic.getProName();
+    barDataset.addValue(vic.getTotalInbound(), "進貨數", category);
+    barDataset.addValue(vic.getTotalOutboundActual(), "出貨數", category);
+    lineDataset.addValue(vic.getStockActual(), "現有庫存", category);
+}
+
+// 產生柱狀圖
+JFreeChart chart = ChartFactory.createBarChart(
+        "進、出貨及庫存(綜合圖)",
+        "產品",
+        "數量",
+        barDataset
+);
+
+// 設定字型
+chart.getTitle().setFont(new Font("微軟正黑體", Font.BOLD, 16));
+chart.getLegend().setItemFont(new Font("微軟正黑體", Font.PLAIN, 12));
+
+CategoryPlot plot = chart.getCategoryPlot();
+plot.getDomainAxis().setLabelFont(new Font("微軟正黑體", Font.PLAIN, 12));
+plot.getRangeAxis().setLabelFont(new Font("微軟正黑體", Font.PLAIN, 12));
+
+// 柱狀圖 Renderer 設定
+BarRenderer barRenderer = (BarRenderer) plot.getRenderer();
+barRenderer.setItemMargin(0.05);
+barRenderer.setMaximumBarWidth(0.1);
+barRenderer.setDefaultItemLabelsVisible(true);
+barRenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+barRenderer.setDefaultItemLabelFont(new Font("微軟正黑體", Font.PLAIN, 10));
+barRenderer.setSeriesPaint(0, new Color(90, 107, 44));
+barRenderer.setSeriesPaint(1, new Color(138, 151, 105));
+
+// 新增折線圖資料集與 Renderer（現有庫存）
+plot.setDataset(1, lineDataset);
+LineAndShapeRenderer lineRenderer = new LineAndShapeRenderer();
+lineRenderer.setSeriesShapesVisible(0, true);
+lineRenderer.setSeriesLinesVisible(0, true);
+lineRenderer.setSeriesPaint(0, new Color(0, 200, 0));
+plot.setRenderer(1, lineRenderer);
+plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+
+// 調整 X 軸間距
+CategoryAxis domainAxis = plot.getDomainAxis();
+domainAxis.setCategoryMargin(0.3);
+domainAxis.setLowerMargin(0.03);
+domainAxis.setUpperMargin(0.03);

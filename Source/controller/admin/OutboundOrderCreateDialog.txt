@@ -1,0 +1,25 @@
+出貨單建立/修改
+package controller.admin;
+
+// 選擇客戶
+btnSelectCustomer = new JButton("選擇");
+btnSelectCustomer.addActionListener(e -> {
+    CustomerSelectDialog csd = new CustomerSelectDialog((Frame)getOwner());
+    csd.setVisible(true);
+    Customers selected = csd.getSelectedCustomer();
+    if (selected != null) {
+        txtCusUsername.setText(selected.getCusUsername());
+        txtCusPhone.setText(selected.getCusPhone());
+    }
+});
+contentPane.add(btnSelectCustomer);
+
+// 選擇日期
+btnPickDate = new JButton("選擇");
+btnPickDate.addActionListener(e -> {
+    String selected = Tool.pickDate(this);
+    if (selected != null) {
+        txtOrderDate.setText(selected);
+    }
+});
+contentPane.add(btnPickDate);

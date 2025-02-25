@@ -1,0 +1,21 @@
+package service;
+
+import exception.ServiceException;
+import model.OutboundDetail;
+import java.util.List;
+
+public interface OutboundDetailService {
+    /* Read */
+    List<OutboundDetail> getAllOutboundDetails() throws ServiceException;
+    OutboundDetail getOutboundDetailById(int id) throws ServiceException;
+    List<OutboundDetail> getOutboundDetailsByHeaderNo(String outNo) throws ServiceException;
+    
+    /* Create */
+    boolean addOutboundDetail(OutboundDetail outboundDetail) throws ServiceException;
+    
+    /* Update */
+    boolean updateOutboundDetail(OutboundDetail outboundDetail) throws ServiceException;
+    
+    /* Delete */
+    boolean removeOutboundDetail(int id) throws ServiceException;
+}

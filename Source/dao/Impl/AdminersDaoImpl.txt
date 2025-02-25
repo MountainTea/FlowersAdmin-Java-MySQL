@@ -1,0 +1,144 @@
+package dao.impl;
+
+import dao.AdminersDao;
+import model.Adminers;
+import util.DbConnection;
+import exception.ServiceException;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class AdminersDaoImpl implements AdminersDao {
+
+    @Override
+    public List<Adminers> getAllAdminers() throws ServiceException {
+        List<Adminers> list = new ArrayList<>();
+        String sql = "SELECT * FROM adminers";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Adminers admin = new Adminers();
+                admin.setId(rs.getInt("id"));
+                admin.setAdmUsername(rs.getString("adm_username"));
+                admin.setAdmPassword(rs.getString("adm_password"));
+                admin.setAdmName(rs.getString("adm_name"));
+                admin.setAdmPhone(rs.getString("adm_phone"));
+                admin.setAdmRole(rs.getInt("adm_role"));
+                admin.setAdmNote(rs.getString("adm_note"));
+                admin.setCreatedAt(rs.getTimestamp("created_at"));
+                admin.setUpdatedAt(rs.getTimestamp("updated_at"));
+                list.add(admin);
+            }
+        } catch (SQLException e) {
+
+            throw new ServiceException("Error retrieving all adminers", e);
+        }
+        return list;
+    }
+
+    @Override
+    public Adminers getAdminersById(int id) throws ServiceException {
+        String sql = "SELECT * FROM adminers WHERE id = ?";
+        Adminers admin = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    admin = new Adminers();
+                    admin.setId(rs.getInt("id"));
+                    admin.setAdmUsername(rs.getString("adm_username"));
+                    admin.setAdmPassword(rs.getString("adm_password"));
+                    admin.setAdmName(rs.getString("adm_name"));
+                    admin.setAdmPhone(rs.getString("adm_phone"));
+                    admin.setAdmRole(rs.getInt("adm_role"));
+                    admin.setAdmNote(rs.getString("adm_note"));
+                    admin.setCreatedAt(rs.getTimestamp("created_at"));
+                    admin.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving adminers by id: " + id, e);
+        }
+        return admin;
+    }
+
+    @Override
+    public Adminers getAdminersByUsername(String admUsername) throws ServiceException {
+        String sql = "SELECT * FROM adminers WHERE adm_username = ?";
+        Adminers admin = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, admUsername);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    admin = new Adminers();
+                    admin.setId(rs.getInt("id"));
+                    admin.setAdmUsername(rs.getString("adm_username"));
+                    admin.setAdmPassword(rs.getString("adm_password"));
+                    admin.setAdmName(rs.getString("adm_name"));
+                    admin.setAdmPhone(rs.getString("adm_phone"));
+                    admin.setAdmRole(rs.getInt("adm_role"));
+                    admin.setAdmNote(rs.getString("adm_note"));
+                    admin.setCreatedAt(rs.getTimestamp("created_at"));
+                    admin.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving adminers by username: " + admUsername, e);
+        }
+        return admin;
+    }
+
+    @Override
+    public boolean insertAdminers(Adminers adminers) throws ServiceException {
+        String sql = "INSERT INTO adminers (adm_username, adm_password, adm_name, adm_phone, adm_role, adm_note, created_at) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, adminers.getAdmUsername());
+            ps.setString(2, adminers.getAdmPassword());
+            ps.setString(3, adminers.getAdmName());
+            ps.setString(4, adminers.getAdmPhone());
+            ps.setInt(5, adminers.getAdmRole());
+            ps.setString(6, adminers.getAdmNote());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting new adminers", e);
+        }
+    }
+
+    @Override
+    public boolean updateAdminers(Adminers adminers) throws ServiceException {
+        String sql = "UPDATE adminers SET adm_password = ?, adm_name = ?, adm_phone = ?, adm_role = ?, adm_note = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, adminers.getAdmPassword());
+            ps.setString(2, adminers.getAdmName());
+            ps.setString(3, adminers.getAdmPhone());
+            ps.setInt(4, adminers.getAdmRole());
+            ps.setString(5, adminers.getAdmNote());
+            ps.setInt(6, adminers.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating adminers with id: " + adminers.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteAdminers(int id) throws ServiceException {
+        String sql = "DELETE FROM adminers WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting adminers with id: " + id, e);
+        }
+    }
+}

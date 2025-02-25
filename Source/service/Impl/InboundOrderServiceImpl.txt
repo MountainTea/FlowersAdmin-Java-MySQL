@@ -1,0 +1,84 @@
+package service.impl;
+
+import dao.InboundOrderDao;
+import dao.impl.InboundOrderDaoImpl;
+import exception.ServiceException;
+import java.util.List;
+import model.InboundOrder;
+import service.InboundOrderService;
+
+public class InboundOrderServiceImpl implements InboundOrderService {
+
+    private InboundOrderDao inboundOrderDao;
+    
+    public InboundOrderServiceImpl() {
+        this.inboundOrderDao = new InboundOrderDaoImpl();
+    }
+    
+    public InboundOrderServiceImpl(InboundOrderDao inboundOrderDao) {
+        this.inboundOrderDao = inboundOrderDao;
+    }
+    
+    @Override
+    public List<InboundOrder> getAllInboundOrders() throws ServiceException {
+        try {
+            return inboundOrderDao.getAllInboundOrders();
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving all inbound orders", e);
+        }
+    }
+    
+    @Override
+    public InboundOrder getInboundOrderById(int id) throws ServiceException {
+        try {
+            return inboundOrderDao.getInboundOrderById(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving inbound order by id: " + id, e);
+        }
+    }
+    
+    @Override
+    public InboundOrder getInboundOrderByNo(String inbNo) throws ServiceException {
+        try {
+            return inboundOrderDao.getInboundOrderByNo(inbNo);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving inbound order by inbNo: " + inbNo, e);
+        }
+    }
+    
+    @Override
+    public boolean addInboundOrder(InboundOrder inboundOrder) throws ServiceException {
+        try {
+            return inboundOrderDao.insertInboundOrder(inboundOrder);
+        } catch (Exception e) {
+            throw new ServiceException("Error adding inbound order", e);
+        }
+    }
+    
+    @Override
+    public boolean updateInboundOrder(InboundOrder inboundOrder) throws ServiceException {
+        try {
+            return inboundOrderDao.updateInboundOrder(inboundOrder);
+        } catch (Exception e) {
+            throw new ServiceException("Error updating inbound order with inbNo: " + inboundOrder.getInbNo(), e);
+        }
+    }
+    
+    @Override
+    public boolean removeInboundOrder(int id) throws ServiceException {
+        try {
+            return inboundOrderDao.deleteInboundOrder(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error deleting inbound order with id: " + id, e);
+        }
+    }
+
+    @Override
+    public String getNextInbNo() throws ServiceException {
+        try {
+            return inboundOrderDao.getNextInbNo();
+        } catch (Exception e) {
+            throw new ServiceException("Error generating next inbound no", e);
+        }
+    }
+}

@@ -1,0 +1,133 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class Customers {
+    private int id;
+    private String cusUsername;  
+    private String cusPassword;    
+    private String cusName;			
+    private String cusPhone;	
+    private String cusEmail;           
+    private String cusAddress;	
+    private int cusState;          
+    private String cusNote;        
+    private String maintainedBy;   
+    private Timestamp createdAt;    
+    private Timestamp updatedAt;     
+
+    public Customers() {}
+
+    public Customers(int id, String cusUsername, String cusPassword, String cusName, String cusPhone, String cusEmail, String cusAddress, int cusState, String cusNote, String maintainedBy, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.cusUsername = cusUsername;
+        this.cusPassword = cusPassword;
+        this.cusName = cusName;
+        this.cusPhone = cusPhone;
+        this.cusEmail = cusEmail;
+        this.cusAddress = cusAddress;
+        this.cusState = cusState;
+        this.cusNote = cusNote;
+        this.maintainedBy = maintainedBy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getter and Setter methods
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }  
+
+    public String getCusUsername() {
+        return cusUsername;
+    }
+
+    public void setCusUsername(String cusUsername) {
+        this.cusUsername = cusUsername;
+    }
+
+    public String getCusPassword() {
+        return cusPassword;
+    }
+
+    public void setCusPassword(String cusPassword) {
+        this.cusPassword = cusPassword;
+    }
+
+    public String getCusName() {
+        return cusName;
+    }
+
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
+
+    public String getCusPhone() {
+        return cusPhone;
+    }
+
+    public void setCusPhone(String cusPhone) {
+        this.cusPhone = cusPhone;
+    }
+    
+    public String getCusEmail() {
+        return cusEmail;
+    }
+
+    public void setCusEmail(String cusEmail) {
+        this.cusEmail = cusEmail;
+    }
+
+    public String getCusAddress() {
+        return cusAddress;
+    }
+
+    public void setCusAddress(String cusAddress) {
+        this.cusAddress = cusAddress;
+    }
+
+    public int getCusState() {
+        return cusState;
+    }
+
+    public void setCusState(int cusState) {
+        this.cusState = cusState;
+    }
+
+    public String getCusNote() {
+        return cusNote;
+    }
+
+    public void setCusNote(String cusNote) {
+        this.cusNote = cusNote;
+    }
+
+    public String getMaintainedBy() {
+        return maintainedBy;
+    }
+
+    public void setMaintainedBy(String maintainedBy) {
+        this.maintainedBy = maintainedBy;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}

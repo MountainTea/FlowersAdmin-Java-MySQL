@@ -1,0 +1,151 @@
+package dao.impl;
+
+import dao.OutboundOrderDao;
+import exception.ServiceException;
+import model.OutboundOrder;
+import util.DbConnection;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class OutboundOrderDaoImpl implements OutboundOrderDao {
+
+    @Override
+    public List<OutboundOrder> getAllOutboundOrders() throws ServiceException {
+        List<OutboundOrder> list = new ArrayList<>();
+        String sql = "SELECT out_no, cus_username, cus_name, cus_phone, cus_address, " +
+                     "order_date, total_amount, note, maintained_by, ship_status, created_at, updated_at " +
+                     "FROM flowersadmin.v_outbound_summary";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                OutboundOrder order = new OutboundOrder();
+                order.setOutNo(rs.getString("out_no"));
+                order.setCusUsername(rs.getString("cus_username"));
+                order.setCusName(rs.getString("cus_name"));
+                order.setCusPhone(rs.getString("cus_phone"));
+                order.setCusAddress(rs.getString("cus_address"));
+                order.setOrderDate(rs.getDate("order_date"));
+                order.setTotalAmount(rs.getInt("total_amount"));
+                order.setNote(rs.getString("note"));
+                order.setMaintainedBy(rs.getString("maintained_by"));
+                order.setShipStatus(rs.getInt("ship_status"));
+                order.setCreatedAt(rs.getTimestamp("created_at"));
+                order.setUpdatedAt(rs.getTimestamp("updated_at"));
+                list.add(order);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all outbound orders", e);
+        }
+        return list;
+    }
+
+    @Override
+    public OutboundOrder getOutboundOrderByNo(String outNo) throws ServiceException {
+        String sql = "SELECT out_no, cus_username, cus_name, cus_phone, cus_address, " +
+                     "order_date, total_amount, note, maintained_by, ship_status, created_at, updated_at " +
+                     "FROM flowersadmin.v_outbound_summary " +
+                     "WHERE out_no = ?";
+        OutboundOrder order = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outNo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    order = new OutboundOrder();
+                    order.setOutNo(rs.getString("out_no"));
+                    order.setCusUsername(rs.getString("cus_username"));
+                    order.setCusName(rs.getString("cus_name"));
+                    order.setCusPhone(rs.getString("cus_phone"));
+                    order.setCusAddress(rs.getString("cus_address"));
+                    order.setOrderDate(rs.getDate("order_date"));
+                    order.setTotalAmount(rs.getInt("total_amount"));
+                    order.setNote(rs.getString("note"));
+                    order.setMaintainedBy(rs.getString("maintained_by"));
+                    order.setShipStatus(rs.getInt("ship_status"));
+                    order.setCreatedAt(rs.getTimestamp("created_at"));
+                    order.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving outbound order by outNo: " + outNo, e);
+        }
+        return order;
+    }
+
+    @Override
+    public boolean insertOutboundOrder(OutboundOrder outboundOrder) throws ServiceException {
+        String sql = "INSERT INTO outbound_header (out_no, cus_username, order_date, note, maintained_by, ship_status, created_at) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundOrder.getOutNo());
+            ps.setString(2, outboundOrder.getCusUsername());
+            ps.setDate(3, new java.sql.Date(outboundOrder.getOrderDate().getTime()));
+            ps.setString(4, outboundOrder.getNote());
+            ps.setString(5, outboundOrder.getMaintainedBy());
+            ps.setInt(6, outboundOrder.getShipStatus());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting outbound order", e);
+        }
+    }
+
+    @Override
+    public boolean updateOutboundOrder(OutboundOrder outboundOrder) throws ServiceException {
+        String sql = "UPDATE outbound_header SET cus_username = ?, order_date = ?, note = ?, maintained_by = ?, ship_status = ?, updated_at = CURRENT_TIMESTAMP " +
+                     "WHERE out_no = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundOrder.getCusUsername());
+            ps.setDate(2, new java.sql.Date(outboundOrder.getOrderDate().getTime()));
+            ps.setString(3, outboundOrder.getNote());
+            ps.setString(4, outboundOrder.getMaintainedBy());
+            ps.setInt(5, outboundOrder.getShipStatus());
+            ps.setString(6, outboundOrder.getOutNo());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating outbound order with outNo: " + outboundOrder.getOutNo(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteOutboundOrder(String outNo) throws ServiceException {
+        String sql = "DELETE FROM outbound_header WHERE out_no = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outNo);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting outbound order with outNo: " + outNo, e);
+        }
+    }
+
+    @Override
+    public String getNextOutNo(Date orderDate) throws ServiceException {
+        Date today = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = sdf.format(today);
+        String sql = "SELECT out_no FROM outbound_header WHERE out_no LIKE ? ORDER BY out_no DESC LIMIT 1";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "out" + dateStr + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String lastOutNo = rs.getString("out_no");
+                    String last3Digits = lastOutNo.substring(11);
+                    int num = Integer.parseInt(last3Digits);
+                    num++;
+                    return "out" + dateStr + String.format("%03d", num);
+                } else {
+                    return "out" + dateStr + "001";
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error generating next outbound no", e);
+        }
+    }
+}

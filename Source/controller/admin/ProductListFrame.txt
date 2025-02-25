@@ -1,0 +1,25 @@
+產品列表管理
+package controller.admin;
+
+// 新增
+btnAdd = new JButton("新增");
+btnAdd.addActionListener(e -> onAdd());
+contentPane.add(btnAdd);
+
+// 修改
+btnEdit = new JButton("修改");
+btnEdit.addActionListener(e -> onEdit());
+contentPane.add(btnEdit);
+
+// 刪除
+btnDelete = new JButton("刪除");
+btnDelete.addActionListener(e -> onDelete());
+contentPane.add(btnDelete);
+
+// 返回
+btnBack = new JButton("返回");
+btnBack.addActionListener(e -> {
+    new AdminHome(currentAdmin).setVisible(true);
+    dispose();
+});
+contentPane.add(btnBack);

@@ -1,0 +1,103 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class Adminers {
+	    private int id;
+	    private String admUsername;
+	    private String admPassword;
+	    private String admName;
+	    private String admPhone;
+	    private int admRole; // 0=管理者,1=主管,2=員工
+	    private String admNote;
+	    private Timestamp createdAt;
+	    private Timestamp updatedAt;
+
+	    public Adminers() {}
+
+	    public Adminers(int id, String admUsername, String admPassword, String admName, String admPhone, int admRole, String admNote, Timestamp createdAt, Timestamp updatedAt) {
+	        this.id = id;
+	        this.admUsername = admUsername;
+	        this.admPassword = admPassword;
+	        this.admName = admName;
+	        this.admPhone = admPhone;
+	        this.admRole = admRole;
+	        this.admNote = admNote;
+	        this.createdAt = createdAt;
+	        this.updatedAt = updatedAt;
+	    }
+
+	    // Getter and Setter methods
+
+	    public int getId() {
+	        return id;
+	    }
+
+	    public void setId(int id) {
+	        this.id = id;
+	    }  
+
+	    public String getAdmUsername() {
+	        return admUsername;
+	    }
+
+	    public void setAdmUsername(String admUsername) {
+	        this.admUsername = admUsername;
+	    }
+
+	    public String getAdmPassword() {
+	        return admPassword;
+	    }
+
+	    public void setAdmPassword(String admPassword) {
+	        this.admPassword = admPassword;
+	    }
+
+	    public String getAdmName() {
+	        return admName;
+	    }
+
+	    public void setAdmName(String admName) {
+	        this.admName = admName;
+	    }
+
+	    public String getAdmPhone() {
+	        return admPhone;
+	    }
+
+	    public void setAdmPhone(String admPhone) {
+	        this.admPhone = admPhone;
+	    }
+
+	    public int getAdmRole() {
+	        return admRole;
+	    }
+
+	    public void setAdmRole(int admRole) {
+	        this.admRole = admRole;
+	    }
+
+	    public String getAdmNote() {
+	        return admNote;
+	    }
+
+	    public void setAdmNote(String admNote) {
+	        this.admNote = admNote;
+	    }
+
+	    public Timestamp getCreatedAt() {
+	        return createdAt;
+	    }
+
+	    public void setCreatedAt(Timestamp createdAt) {
+	        this.createdAt = createdAt;
+	    }
+
+	    public Timestamp getUpdatedAt() {
+	        return updatedAt;
+	    }
+
+	    public void setUpdatedAt(Timestamp updatedAt) {
+	        this.updatedAt = updatedAt;
+	    }
+	}

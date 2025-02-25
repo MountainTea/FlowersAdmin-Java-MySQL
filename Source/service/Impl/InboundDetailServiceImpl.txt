@@ -1,0 +1,52 @@
+package service.impl;
+
+import dao.InboundDetailDao;
+import dao.impl.InboundDetailDaoImpl;
+import exception.ServiceException;
+import model.InboundDetail;
+import service.InboundDetailService;
+
+import java.util.List;
+
+public class InboundDetailServiceImpl implements InboundDetailService {
+
+    private InboundDetailDao inboundDetailDao;
+
+    public InboundDetailServiceImpl() {
+        this.inboundDetailDao = new InboundDetailDaoImpl();
+    }
+
+    public InboundDetailServiceImpl(InboundDetailDao inboundDetailDao) {
+        this.inboundDetailDao = inboundDetailDao;
+    }
+
+    @Override
+    public ListInboundDetail getAllInboundDetails() throws ServiceException {
+        return inboundDetailDao.getAllInboundDetails();
+    }
+
+    @Override
+    public InboundDetail getInboundDetailById(int id) throws ServiceException {
+        return inboundDetailDao.getInboundDetailById(id);
+    }
+
+    @Override
+    public ListInboundDetail getInboundDetailsByHeaderNo(String inbNo) throws ServiceException {
+        return inboundDetailDao.getInboundDetailsByHeaderNo(inbNo);
+    }
+
+    @Override
+    public boolean addInboundDetail(InboundDetail inboundDetail) throws ServiceException {
+        return inboundDetailDao.insertInboundDetail(inboundDetail);
+    }
+
+    @Override
+    public boolean updateInboundDetail(InboundDetail inboundDetail) throws ServiceException {
+        return inboundDetailDao.updateInboundDetail(inboundDetail);
+    }
+
+    @Override
+    public boolean removeInboundDetail(int id) throws ServiceException {
+        return inboundDetailDao.deleteInboundDetail(id);
+    }
+}

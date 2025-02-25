@@ -1,0 +1,73 @@
+package service.impl;
+
+import dao.ProductsDao;
+import dao.impl.ProductsDaoImpl;
+import exception.ServiceException;
+import model.ProductSales;
+import model.Products;
+import service.ProductsService;
+
+import java.util.List;
+
+public class ProductsServiceImpl implements ProductsService {
+
+    private ProductsDao productsDao;
+
+    public ProductsServiceImpl() {
+        this.productsDao = new ProductsDaoImpl();
+    }
+
+    public ProductsServiceImpl(ProductsDao productsDao) {
+        this.productsDao = productsDao;
+    }
+
+    @Override
+    public List<Products> getAllProducts() throws ServiceException {
+        return productsDao.getAllProducts();
+    }
+
+    @Override
+    public Products getProductsById(int id) throws ServiceException {
+        return productsDao.getProductsById(id);
+    }
+
+    @Override
+    public Products getProductsByProNo(String proNo) throws ServiceException {
+        return productsDao.getProductsByProNo(proNo);
+    }
+
+    @Override
+    public boolean addProducts(Products products) throws ServiceException {
+        return productsDao.insertProducts(products);
+    }
+
+    @Override
+    public boolean updateProducts(Products products) throws ServiceException {
+        return productsDao.updateProducts(products);
+    }
+
+    @Override
+    public boolean removeProducts(int id) throws ServiceException {
+        return productsDao.deleteProducts(id);
+    }
+
+    @Override
+    public List<ProductSales> getProductSalesStats() throws ServiceException {
+        return productsDao.getProductSalesStats();
+    }
+
+    @Override
+    public String getNextProNo() throws ServiceException {
+        return productsDao.getNextProNo();
+        
+    }
+    
+    @Override
+    public boolean isProductInPendingOrder(int productId) throws ServiceException {
+        return productsDao.isProductInPendingOrder(productId);
+    }
+
+
+
+
+}

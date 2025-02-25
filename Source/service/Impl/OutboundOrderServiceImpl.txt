@@ -1,0 +1,98 @@
+package service.impl;
+
+import dao.OutboundOrderDao;
+import dao.OutboundDetailDao;
+import dao.impl.OutboundOrderDaoImpl;
+import dao.impl.OutboundDetailDaoImpl;
+import exception.ServiceException;
+import java.util.Date;
+import java.util.List;
+import model.OutboundDetail;
+import model.OutboundOrder;
+import service.OutboundOrderService;
+
+public class OutboundOrderServiceImpl implements OutboundOrderService {
+
+    private OutboundOrderDao outboundOrderDao;
+    private OutboundDetailDao detailDao;
+
+    public OutboundOrderServiceImpl() {
+        this.outboundOrderDao = new OutboundOrderDaoImpl();
+        this.detailDao = new OutboundDetailDaoImpl();
+    }
+    
+    public OutboundOrderServiceImpl(OutboundOrderDao outboundOrderDao) {
+        this.outboundOrderDao = outboundOrderDao;
+        this.detailDao = new OutboundDetailDaoImpl();
+    }
+    
+    @Override
+    public List<OutboundOrder> getAllOutboundOrders() throws ServiceException {
+        try {
+            return outboundOrderDao.getAllOutboundOrders();
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving all outbound orders", e);
+        }
+    }
+    
+    @Override
+    public OutboundOrder getOutboundOrderById(int id) throws ServiceException {
+        try {
+            List<OutboundOrder> list = outboundOrderDao.getAllOutboundOrders();
+            for (OutboundOrder order : list) {
+                if (order.getId() == id) {
+                    return order;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving outbound order by id: " + id, e);
+        }
+    }
+    
+    @Override
+    public OutboundOrder getOutboundOrderByNo(String outNo) throws ServiceException {
+        try {
+            return outboundOrderDao.getOutboundOrderByNo(outNo);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving outbound order by outNo: " + outNo, e);
+        }
+    }
+    
+    @Override
+    public boolean addOutboundOrder(OutboundOrder outboundOrder) throws ServiceException {
+        try {
+            return outboundOrderDao.insertOutboundOrder(outboundOrder);
+        } catch (Exception e) {
+            throw new ServiceException("Error adding outbound order", e);
+        }
+    }
+    
+    @Override
+    public boolean updateOutboundOrder(OutboundOrder outboundOrder) throws ServiceException {
+        try {
+            return outboundOrderDao.updateOutboundOrder(outboundOrder);
+        } catch (Exception e) {
+            throw new ServiceException("Error updating outbound order with outNo: " + outboundOrder.getOutNo(), e);
+        }
+    }
+    
+    @Override
+    public boolean removeOutboundOrderByNo(String outNo) throws ServiceException {
+        try {
+            return outboundOrderDao.deleteOutboundOrder(outNo);
+        } catch (Exception e) {
+            throw new ServiceException("Error deleting outbound order with outNo: " + outNo, e);
+        }
+    }
+    
+    @Override
+    public String getNextOutNo(Date orderDate) throws ServiceException {
+        return outboundOrderDao.getNextOutNo(new Date());
+    }
+    
+    @Override
+    public List<OutboundDetail> getOutboundDetailsByOutNo(String outNo) throws Exception {
+        return detailDao.findByOutNo(outNo);
+    }
+}

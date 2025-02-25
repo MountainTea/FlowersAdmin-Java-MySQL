@@ -1,0 +1,98 @@
+package util;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+import java.util.regex.Pattern;
+
+public class Tool {
+
+
+
+   // 直接使用 ASCII 產生驗證碼
+
+    public static String generateRandomCodeWithASCII(int length) {
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            if (rand.nextBoolean()) {
+                int asciiCode = 65 + rand.nextInt(26);
+                sb.append((char) asciiCode);
+            } else {
+                int asciiCode = 48 + rand.nextInt(10);
+                sb.append((char) asciiCode);
+            }
+        }
+        return sb.toString();
+    }
+
+
+
+
+
+
+    // 取得目前日期時間
+
+    public static String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return sdf.format(new Date());
+    }
+
+
+
+
+
+    // 驗證身分證格式
+
+    public static boolean isValidID(String id) {
+        if (id == null || id.isEmpty()) return false;
+        String idRegex = "^[A-Z][12]\\d{8}$";
+        return Pattern.matches(idRegex, id);
+    }
+
+
+    // 驗證 Email 格式
+
+    public static boolean isValidEmail(String email) {
+        if (email == null || email.isEmpty()) return false;
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return Pattern.matches(emailRegex, email);
+    }
+
+
+
+    // 驗證密碼
+
+    public static boolean isValidPassword(String password) {
+        if (password == null || password.length() < 6) return false;
+        String pwRegex = "^(?=.*[A-Za-z])(?=.*\\d).{6,}$";
+        return Pattern.matches(pwRegex, password);
+    }
+
+
+
+    // 驗證手機格式（必須以 0 開頭，其餘皆為數字）
+
+    public static boolean isValidPhone(String phone) {
+        if (phone == null) return false;
+        String phoneRegex = "^0\\d+$";
+        return Pattern.matches(phoneRegex, phone);
+    }
+
+
+
+
+    // 驗證供應商編號(統一編號)
+
+    public static boolean isValidSupplierNo(String supNo) {
+        if (supNo == null) return false;
+        String supNoRegex = "^\\d{8}$";
+        return Pattern.matches(supNoRegex, supNo);
+    }
+
+
+
+
+
+}

@@ -1,0 +1,170 @@
+package dao.impl;
+
+import dao.CustomersDao;
+import exception.ServiceException;
+import model.Customers;
+import util.DbConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CustomersDaoImpl implements CustomersDao {
+
+    @Override
+    public List<Customers> getAllCustomers() throws ServiceException {
+        List<Customers> list = new ArrayList<>();
+        String sql = "SELECT * FROM customers";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Customers cus = new Customers();
+                cus.setId(rs.getInt("id"));
+                cus.setCusUsername(rs.getString("cus_username"));
+                cus.setCusPassword(rs.getString("cus_password"));
+                cus.setCusName(rs.getString("cus_name"));
+                cus.setCusPhone(rs.getString("cus_phone"));
+                cus.setCusEmail(rs.getString("cus_email"));
+                cus.setCusAddress(rs.getString("cus_address"));
+                cus.setCusState(rs.getInt("cus_state"));
+                cus.setCusNote(rs.getString("cus_note"));
+                cus.setMaintainedBy(rs.getString("maintained_by"));
+                cus.setCreatedAt(rs.getTimestamp("created_at"));
+                cus.setUpdatedAt(rs.getTimestamp("updated_at"));
+                list.add(cus);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all customers", e);
+        }
+        return list;
+    }
+
+    @Override
+    public Customers getCustomersById(int id) throws ServiceException {
+        String sql = "SELECT * FROM customers WHERE id = ?";
+        Customers cus = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    cus = new Customers();
+                    cus.setId(rs.getInt("id"));
+                    cus.setCusUsername(rs.getString("cus_username"));
+                    cus.setCusPassword(rs.getString("cus_password"));
+                    cus.setCusName(rs.getString("cus_name"));
+                    cus.setCusPhone(rs.getString("cus_phone"));
+                    cus.setCusEmail(rs.getString("cus_email"));
+                    cus.setCusAddress(rs.getString("cus_address"));
+                    cus.setCusState(rs.getInt("cus_state"));
+                    cus.setCusNote(rs.getString("cus_note"));
+                    cus.setMaintainedBy(rs.getString("maintained_by"));
+                    cus.setCreatedAt(rs.getTimestamp("created_at"));
+                    cus.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving customer by id: " + id, e);
+        }
+        return cus;
+    }
+
+    @Override
+    public Customers getCustomersByUsername(String cusUsername) throws ServiceException {
+        String sql = "SELECT * FROM customers WHERE cus_username = ?";
+        Customers cus = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, cusUsername);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    cus = new Customers();
+                    cus.setId(rs.getInt("id"));
+                    cus.setCusUsername(rs.getString("cus_username"));
+                    cus.setCusPassword(rs.getString("cus_password"));
+                    cus.setCusName(rs.getString("cus_name"));
+                    cus.setCusPhone(rs.getString("cus_phone"));
+                    cus.setCusEmail(rs.getString("cus_email"));
+                    cus.setCusAddress(rs.getString("cus_address"));
+                    cus.setCusState(rs.getInt("cus_state"));
+                    cus.setCusNote(rs.getString("cus_note"));
+                    cus.setMaintainedBy(rs.getString("maintained_by"));
+                    cus.setCreatedAt(rs.getTimestamp("created_at"));
+                    cus.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving customer by username: " + cusUsername, e);
+        }
+        return cus;
+    }
+
+    @Override
+    public boolean insertCustomers(Customers customers) throws ServiceException {
+        String sql = "INSERT INTO customers ("
+                + "cus_username, cus_password, cus_name, cus_phone, cus_email, "
+                + "cus_address, cus_state, cus_note, maintained_by, created_at"
+                + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, customers.getCusUsername());
+            ps.setString(2, customers.getCusPassword());
+            ps.setString(3, customers.getCusName());
+            ps.setString(4, customers.getCusPhone());
+            ps.setString(5, customers.getCusEmail());
+            ps.setString(6, customers.getCusAddress());
+            ps.setInt(7, customers.getCusState());
+            ps.setString(8, customers.getCusNote());
+            ps.setString(9, customers.getMaintainedBy());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting new customer", e);
+        }
+    }
+
+    @Override
+    public boolean updateCustomers(Customers customers) throws ServiceException {
+        String sql = "UPDATE customers SET "
+                + "cus_password = ?, cus_name = ?, cus_phone = ?, cus_email = ?, "
+                + "cus_address = ?, cus_state = ?, cus_note = ?, maintained_by = ?, updated_at = CURRENT_TIMESTAMP "
+                + "WHERE id = ?";
+
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, customers.getCusPassword());
+            ps.setString(2, customers.getCusName());
+            ps.setString(3, customers.getCusPhone());
+            ps.setString(4, customers.getCusEmail());
+            ps.setString(5, customers.getCusAddress());
+            ps.setInt(6, customers.getCusState());
+            ps.setString(7, customers.getCusNote());
+            ps.setString(8, customers.getMaintainedBy());
+            ps.setInt(9, customers.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating customer with id: " + customers.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteCustomers(int id) throws ServiceException {
+        String sql = "DELETE FROM customers WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting customer with id: " + id, e);
+        }
+    }
+}

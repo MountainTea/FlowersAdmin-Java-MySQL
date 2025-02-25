@@ -1,0 +1,145 @@
+package dao.impl;
+
+import dao.InboundDetailDao;
+import exception.ServiceException;
+import model.InboundDetail;
+import util.DbConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class InboundDetailDaoImpl implements InboundDetailDao {
+
+    @Override
+    public List<InboundDetail> getAllInboundDetails() throws ServiceException {
+        List<InboundDetail> list = new ArrayList<>();
+
+        String sql = "SELECT id, inb_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at "
+                   + "FROM v_inbound_detail";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                list.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all inbound details", e);
+        }
+        return list;
+    }
+
+    @Override
+    public InboundDetail getInboundDetailById(int id) throws ServiceException {
+        String sql = "SELECT id, inb_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at "
+                   + "FROM v_inbound_detail "
+                   + "WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving inbound detail by id: " + id, e);
+        }
+        return null;
+    }
+
+    @Override
+    public List<InboundDetail> getInboundDetailsByHeaderNo(String inbNo) throws ServiceException {
+        List<InboundDetail> list = new ArrayList<>();
+        String sql = "SELECT id, inb_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at "
+                   + "FROM v_inbound_detail "
+                   + "WHERE inb_no = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, inbNo);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving inbound details for inb_no: " + inbNo, e);
+        }
+        return list;
+    }
+
+    @Override
+    public boolean insertInboundDetail(InboundDetail inboundDetail) throws ServiceException {
+        String sql = "INSERT INTO inbound_detail (inb_no, pro_no, unit_price, quantity, note, created_at) "
+                   + "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, inboundDetail.getInbNo());
+            ps.setString(2, inboundDetail.getProNo());
+            ps.setInt(3, inboundDetail.getUnitPrice());
+            ps.setInt(4, inboundDetail.getQuantity());
+            ps.setString(5, inboundDetail.getNote());
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        inboundDetail.setId(rs.getInt(1));
+                    }
+                }
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting inbound detail", e);
+        }
+    }
+
+    @Override
+    public boolean updateInboundDetail(InboundDetail inboundDetail) throws ServiceException {
+        String sql = "UPDATE inbound_detail "
+                   + "SET pro_no = ?, unit_price = ?, quantity = ?, note = ?, updated_at = CURRENT_TIMESTAMP "
+                   + "WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, inboundDetail.getProNo());
+            ps.setInt(2, inboundDetail.getUnitPrice());
+            ps.setInt(3, inboundDetail.getQuantity());
+            ps.setString(4, inboundDetail.getNote());
+            ps.setInt(5, inboundDetail.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating inbound detail with id: " + inboundDetail.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteInboundDetail(int id) throws ServiceException {
+        String sql = "DELETE FROM inbound_detail WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting inbound detail with id: " + id, e);
+        }
+    }
+
+
+    private InboundDetail mapRow(ResultSet rs) throws SQLException {
+        InboundDetail d = new InboundDetail();
+        d.setId(rs.getInt("id"));
+        d.setInbNo(rs.getString("inb_no"));
+        d.setProNo(rs.getString("pro_no"));
+        d.setProName(rs.getString("pro_name")); 
+        d.setUnitPrice(rs.getInt("unit_price"));
+        d.setQuantity(rs.getInt("quantity"));
+        d.setNote(rs.getString("note"));
+        d.setCreatedAt(rs.getTimestamp("created_at"));
+        d.setUpdatedAt(rs.getTimestamp("updated_at"));
+        return d;
+    }
+}

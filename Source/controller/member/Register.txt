@@ -1,0 +1,21 @@
+會員註冊
+
+package controller.member;
+
+// 回登入頁
+btnToLogin = new JButton("回登入頁");
+btnToLogin.addActionListener(e -> {
+    new Login().setVisible(true);
+    dispose();
+});
+contentPane.add(btnToLogin);
+
+// 重填
+btnReset = new JButton("重填");
+btnReset.addActionListener(e -> resetFields());
+contentPane.add(btnReset);
+
+// 送出
+btnSubmit = new JButton("送出");
+btnSubmit.addActionListener(e -> submitForm());
+contentPane.add(btnSubmit);

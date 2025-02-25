@@ -1,0 +1,216 @@
+package dao.impl;
+
+import dao.OutboundDetailDao;
+import exception.ServiceException;
+import model.OutboundDetail;
+import util.DbConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class OutboundDetailDaoImpl implements OutboundDetailDao {
+
+
+    @Override
+    public List<OutboundDetail> getAllOutboundDetails() throws ServiceException {
+        List<OutboundDetail> list = new ArrayList<>();
+        String sql = "SELECT id, out_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at " +
+                     "FROM flowersadmin.v_outbound_detail";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                OutboundDetail detail = new OutboundDetail();
+                detail.setId(rs.getInt("id"));
+                detail.setOutNo(rs.getString("out_no"));
+                detail.setProNo(rs.getString("pro_no"));
+                detail.setProName(rs.getString("pro_name")); 
+                detail.setUnitPrice(rs.getInt("unit_price"));
+                detail.setQuantity(rs.getInt("quantity"));
+                detail.setNote(rs.getString("note"));
+                detail.setCreatedAt(rs.getTimestamp("created_at"));
+                detail.setUpdatedAt(rs.getTimestamp("updated_at"));
+                list.add(detail);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all outbound details", e);
+        }
+        return list;
+    }
+
+
+    @Override
+    public OutboundDetail getOutboundDetailById(int id) throws ServiceException {
+        String sql = "SELECT id, out_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at " +
+                     "FROM flowersadmin.v_outbound_detail WHERE id = ?";
+        OutboundDetail detail = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    detail = new OutboundDetail();
+                    detail.setId(rs.getInt("id"));
+                    detail.setOutNo(rs.getString("out_no"));
+                    detail.setProNo(rs.getString("pro_no"));
+                    detail.setProName(rs.getString("pro_name"));
+                    detail.setUnitPrice(rs.getInt("unit_price"));
+                    detail.setQuantity(rs.getInt("quantity"));
+                    detail.setNote(rs.getString("note"));
+                    detail.setCreatedAt(rs.getTimestamp("created_at"));
+                    detail.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving outbound detail by id: " + id, e);
+        }
+        return detail;
+    }
+
+
+    @Override
+    public List<OutboundDetail> getOutboundDetailsByHeaderNo(String outNo) throws ServiceException {
+        List<OutboundDetail> list = new ArrayList<>();
+        // 改用 v_outbound_detail
+        String sql = "SELECT id, out_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at " +
+                     "FROM flowersadmin.v_outbound_detail WHERE out_no = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outNo);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    OutboundDetail detail = new OutboundDetail();
+                    detail.setId(rs.getInt("id"));
+                    detail.setOutNo(rs.getString("out_no"));
+                    detail.setProNo(rs.getString("pro_no"));
+                    detail.setProName(rs.getString("pro_name"));
+                    detail.setUnitPrice(rs.getInt("unit_price"));
+                    detail.setQuantity(rs.getInt("quantity"));
+                    detail.setNote(rs.getString("note"));
+                    detail.setCreatedAt(rs.getTimestamp("created_at"));
+                    detail.setUpdatedAt(rs.getTimestamp("updated_at"));
+                    list.add(detail);
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving outbound details by header no: " + outNo, e);
+        }
+        return list;
+    }
+
+
+    @Override
+    public boolean insertOutboundDetail(OutboundDetail outboundDetail) throws ServiceException {
+        String sql = "INSERT INTO outbound_detail (out_no, pro_no, pro_name, unit_price, quantity, note, created_at) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundDetail.getOutNo());
+            ps.setString(2, outboundDetail.getProNo());
+            ps.setString(3, outboundDetail.getProName());
+            ps.setInt(4, outboundDetail.getUnitPrice());
+            ps.setInt(5, outboundDetail.getQuantity());
+            ps.setString(6, outboundDetail.getNote());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting outbound detail", e);
+        }
+    }
+    
+
+    public boolean insertOutboundDetailNoProName(OutboundDetail outboundDetail) throws ServiceException {
+        String sql = "INSERT INTO outbound_detail "
+                   + "(out_no, pro_no, unit_price, quantity, note, created_at, updated_at) "
+                   + "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, outboundDetail.getOutNo());
+            ps.setString(2, outboundDetail.getProNo());
+            ps.setInt(3, outboundDetail.getUnitPrice());
+            ps.setInt(4, outboundDetail.getQuantity());
+            ps.setString(5, outboundDetail.getNote());
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting outbound detail (no pro_name)", e);
+        }
+    }
+
+    
+
+    public boolean insertOutboundDetailFixed(OutboundDetail outboundDetail) throws ServiceException {
+        String sql = "INSERT INTO outbound_detail (out_no, pro_no, pro_name, unit_price, quantity, note, created_at, updated_at) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundDetail.getOutNo());
+            ps.setString(2, outboundDetail.getProNo());
+            ps.setString(3, outboundDetail.getProName());
+            ps.setInt(4, outboundDetail.getUnitPrice());
+            ps.setInt(5, outboundDetail.getQuantity());
+            ps.setString(6, outboundDetail.getNote());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting outbound detail with fix", e);
+        }
+    }
+
+    
+
+    @Override
+    public boolean updateOutboundDetail(OutboundDetail outboundDetail) throws ServiceException {
+        String sql = "UPDATE outbound_detail SET pro_no = ?, pro_name = ?, unit_price = ?, quantity = ?, note = ?, updated_at = CURRENT_TIMESTAMP " +
+                     "WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundDetail.getProNo());
+            ps.setString(2, outboundDetail.getProName());
+            ps.setInt(3, outboundDetail.getUnitPrice());
+            ps.setInt(4, outboundDetail.getQuantity());
+            ps.setString(5, outboundDetail.getNote());
+            ps.setInt(6, outboundDetail.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating outbound detail", e);
+        }
+    }
+    
+
+    public boolean updateOutboundDetailNoProName(OutboundDetail outboundDetail) throws ServiceException {
+        String sql = "UPDATE outbound_detail "
+                   + "SET pro_no = ?, unit_price = ?, quantity = ?, note = ?, updated_at = CURRENT_TIMESTAMP "
+                   + "WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, outboundDetail.getProNo());
+            ps.setInt(2, outboundDetail.getUnitPrice());
+            ps.setInt(3, outboundDetail.getQuantity());
+            ps.setString(4, outboundDetail.getNote());
+            ps.setInt(5, outboundDetail.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating outbound detail (no pro_name)", e);
+        }
+    }
+
+
+    @Override
+    public boolean deleteOutboundDetail(int id) throws ServiceException {
+        String sql = "DELETE FROM outbound_detail WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting outbound detail with id: " + id, e);
+        }
+    }
+
+
+    @Override
+    public List<OutboundDetail> findByOutNo(String outNo) throws ServiceException {
+        return getOutboundDetailsByHeaderNo(outNo);
+    }
+}

@@ -1,0 +1,25 @@
+package service;
+
+import java.util.List;
+import exception.ServiceException;
+import model.Products;
+import model.ProductSales;
+
+public interface ProductsService {
+    /* Read */
+    List<Products> getAllProducts() throws ServiceException;
+    Products getProductsById(int id) throws ServiceException;
+    Products getProductsByProNo(String proNo) throws ServiceException;
+    List<ProductSales> getProductSalesStats() throws ServiceException;
+    String getNextProNo() throws ServiceException;
+    boolean isProductInPendingOrder(int productId) throws ServiceException;
+    
+    /* Create */
+    boolean addProducts(Products products) throws ServiceException;
+    
+    /* Update */
+    boolean updateProducts(Products products) throws ServiceException;
+    
+    /* Delete */
+    boolean removeProducts(int id) throws ServiceException;
+}

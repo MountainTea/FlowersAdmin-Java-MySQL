@@ -1,0 +1,21 @@
+package dao;
+
+import java.util.List;
+import exception.ServiceException;
+import model.Adminers;
+
+public interface AdminersDao {
+    /* Read */
+    List<Adminers> getAllAdminers() throws ServiceException;
+    Adminers getAdminersById(int id) throws ServiceException;
+    Adminers getAdminersByUsername(String admUsername) throws ServiceException;
+
+    /* Create */
+    boolean insertAdminers(Adminers adminers) throws ServiceException;
+
+    /* Update */
+    boolean updateAdminers(Adminers adminers) throws ServiceException;
+
+    /* Delete */
+    boolean deleteAdminers(int id) throws ServiceException;
+}

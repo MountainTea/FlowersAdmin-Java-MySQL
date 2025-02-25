@@ -1,0 +1,22 @@
+package dao;
+
+import java.util.List;
+import exception.ServiceException;
+import model.OutboundDetail;
+
+public interface OutboundDetailDao {
+    /* Read */
+    List<OutboundDetail> getAllOutboundDetails() throws ServiceException;
+    OutboundDetail getOutboundDetailById(int id) throws ServiceException;
+    List<OutboundDetail> getOutboundDetailsByHeaderNo(String outNo) throws ServiceException;
+    List<OutboundDetail> findByOutNo(String outNo) throws ServiceException;
+
+    /* Create */
+    boolean insertOutboundDetail(OutboundDetail outboundDetail) throws ServiceException;
+
+    /* Update */
+    boolean updateOutboundDetail(OutboundDetail outboundDetail) throws ServiceException;
+
+    /* Delete */
+    boolean deleteOutboundDetail(int id) throws ServiceException;
+}

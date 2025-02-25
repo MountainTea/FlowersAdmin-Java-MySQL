@@ -1,0 +1,31 @@
+會員登入
+package controller.member;
+
+// 登入
+btnLogin = new JButton("登入");
+btnLogin.addActionListener(e -> onLogin());
+contentPane.add(btnLogin);
+
+// 重填
+btnReset = new JButton("重填");
+btnReset.addActionListener(e -> {
+    txtUsername.setText("");
+    txtPassword.setText("");
+    lblUsernameError.setText("");
+    lblPasswordError.setText("");
+    txtCaptcha.setText("");
+});
+contentPane.add(btnReset);
+
+// 關閉
+btnClose = new JButton("關閉");
+btnClose.addActionListener(e -> dispose());
+contentPane.add(btnClose);
+
+// 後台登入
+btnSwitchToAdmin = new JButton("後台登入");
+btnSwitchToAdmin.addActionListener(e -> {
+    new AdminLogin().setVisible(true);
+    dispose();
+});
+contentPane.add(btnSwitchToAdmin);

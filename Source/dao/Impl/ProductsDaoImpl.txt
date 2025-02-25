@@ -1,0 +1,220 @@
+package dao.impl;
+
+import dao.ProductsDao;
+import model.ProductSales;
+import model.Products;
+import util.DbConnection;
+import exception.ServiceException;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ProductsDaoImpl implements ProductsDao {
+
+    @Override
+    public List<Products> getAllProducts() throws ServiceException {
+        List<Products> list = new ArrayList<>();
+        String sql = "SELECT * FROM products";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Products p = new Products();
+                p.setId(rs.getInt("id"));
+                p.setProNo(rs.getString("pro_no"));
+                p.setProType(rs.getInt("pro_type"));
+                p.setProName(rs.getString("pro_name"));
+                p.setProPricingPrice(rs.getInt("pro_pricing_price"));
+                p.setProState(rs.getInt("pro_state"));
+                p.setProNote(rs.getString("pro_note"));
+                p.setMaintainedBy(rs.getString("maintained_by"));
+                p.setCreatedAt(rs.getTimestamp("created_at"));
+                p.setUpdatedAt(rs.getTimestamp("updated_at"));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all products", e);
+        }
+        return list;
+    }
+
+    @Override
+    public Products getProductsById(int id) throws ServiceException {
+        String sql = "SELECT * FROM products WHERE id = ?";
+        Products p = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    p = new Products();
+                    p.setId(rs.getInt("id"));
+                    p.setProNo(rs.getString("pro_no"));
+                    p.setProType(rs.getInt("pro_type"));
+                    p.setProName(rs.getString("pro_name"));
+                    p.setProPricingPrice(rs.getInt("pro_pricing_price"));
+                    p.setProState(rs.getInt("pro_state"));
+                    p.setProNote(rs.getString("pro_note"));
+                    p.setMaintainedBy(rs.getString("maintained_by"));
+                    p.setCreatedAt(rs.getTimestamp("created_at"));
+                    p.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving product by id: " + id, e);
+        }
+        return p;
+    }
+
+    @Override
+    public Products getProductsByProNo(String proNo) throws ServiceException {
+        String sql = "SELECT * FROM products WHERE pro_no = ?";
+        Products p = null;
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, proNo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    p = new Products();
+                    p.setId(rs.getInt("id"));
+                    p.setProNo(rs.getString("pro_no"));
+                    p.setProType(rs.getInt("pro_type"));
+                    p.setProName(rs.getString("pro_name"));
+                    p.setProPricingPrice(rs.getInt("pro_pricing_price"));
+                    p.setProState(rs.getInt("pro_state"));
+                    p.setProNote(rs.getString("pro_note"));
+                    p.setMaintainedBy(rs.getString("maintained_by"));
+                    p.setCreatedAt(rs.getTimestamp("created_at"));
+                    p.setUpdatedAt(rs.getTimestamp("updated_at"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving product by proNo: " + proNo, e);
+        }
+        return p;
+    }
+
+    @Override
+    public boolean insertProducts(Products products) throws ServiceException {
+        String sql = "INSERT INTO products (pro_no, pro_type, pro_name, pro_pricing_price, pro_state, pro_note, maintained_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, products.getProNo());
+            ps.setInt(2, products.getProType());
+            ps.setString(3, products.getProName());
+            ps.setInt(4, products.getProPricingPrice());
+            ps.setInt(5, products.getProState());
+            ps.setString(6, products.getProNote());
+            ps.setString(7, products.getMaintainedBy());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting product", e);
+        }
+    }
+
+    @Override
+    public boolean updateProducts(Products products) throws ServiceException {
+        String sql = "UPDATE products SET pro_type = ?, pro_name = ?, pro_pricing_price = ?, pro_state = ?, pro_note = ?, maintained_by = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, products.getProType());
+            ps.setString(2, products.getProName());
+            ps.setInt(3, products.getProPricingPrice());
+            ps.setInt(4, products.getProState());
+            ps.setString(5, products.getProNote());
+            ps.setString(6, products.getMaintainedBy());
+            ps.setInt(7, products.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating product with id: " + products.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteProducts(int id) throws ServiceException {
+        String sql = "DELETE FROM products WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting product with id: " + id, e);
+        }
+    }
+
+
+    @Override
+    public List<ProductSales> getProductSalesStats() throws ServiceException {
+        List<ProductSales> list = new ArrayList<>();
+        String sql = "SELECT p.pro_no, p.pro_name, " +
+                     "       (SELECT IFNULL(SUM(od.quantity), 0) FROM outbound_detail od WHERE od.pro_no = p.pro_no) AS totalQuantity " +
+                     "FROM products p";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ProductSales psObj = new ProductSales();
+                psObj.setProNo(rs.getString("pro_no"));
+                psObj.setProName(rs.getString("pro_name"));
+                psObj.setTotalQuantity(rs.getInt("totalQuantity"));
+                list.add(psObj);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving product sales statistics", e);
+        }
+        return list;
+    }
+
+    
+    @Override
+    public String getNextProNo() throws ServiceException {
+        String sql = "SELECT pro_no FROM products WHERE pro_no LIKE 'pro%' ORDER BY pro_no DESC LIMIT 1";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            String maxProNo = null;
+            if (rs.next()) {
+                maxProNo = rs.getString("pro_no"); 
+            }
+            if (maxProNo == null) {
+                return "pro001";
+            } else {
+                String numericPart = maxProNo.substring(3); 
+                int num = Integer.parseInt(numericPart);
+                num++; 
+                String newNumeric = String.format("%03d", num); 
+                return "pro" + newNumeric; 
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error getting next product no", e);
+        }
+    }
+
+    @Override
+    public boolean isProductInPendingOrder(int productId) throws ServiceException {
+        String sql = "SELECT COUNT(*) FROM outbound_detail od " +
+                     "JOIN outbound_header oh ON od.out_no = oh.out_no " +
+                     "WHERE od.pro_no = (SELECT pro_no FROM products WHERE id = ?) " +
+                     "AND oh.ship_status = 0";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("檢查", e);
+        }
+        return false;
+    }
+
+}

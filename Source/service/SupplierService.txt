@@ -1,0 +1,21 @@
+package service;
+
+import exception.ServiceException;
+import model.Supplier;
+import java.util.List;
+
+public interface SupplierService {
+    /* Read */
+    List<Supplier> getAllSuppliers() throws ServiceException;
+    Supplier getSupplierById(int id) throws ServiceException;
+    Supplier getSupplierByNo(String supNo) throws ServiceException;
+    
+    /* Create */
+    boolean addSupplier(Supplier supplier) throws ServiceException;
+    
+    /* Update */
+    boolean updateSupplier(Supplier supplier) throws ServiceException;
+    
+    /* Delete */
+    boolean removeSupplier(int id) throws ServiceException;
+}

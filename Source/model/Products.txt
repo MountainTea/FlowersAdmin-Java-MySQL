@@ -1,0 +1,113 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class Products {
+    private int id;
+    private String proNo;           
+    private int proType;            // 0=資材,1=植栽
+    private String proName;
+    private int proPricingPrice;  
+    private int proState;           // 0=停用,1=使用中
+    private String proNote;
+    private String maintainedBy;   
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+
+    public Products() {}
+
+    public Products(int id, String proNo, int proType, String proName, int proPricingPrice, int proState, String proNote, String maintainedBy, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.proNo = proNo;
+        this.proType = proType;
+        this.proName = proName;
+        this.proPricingPrice = proPricingPrice;
+        this.proState = proState;
+        this.proNote = proNote;
+        this.maintainedBy = maintainedBy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getter and Setter methods
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }  
+
+    public String getProNo() {
+        return proNo;
+    }
+
+    public void setProNo(String proNo) {
+        this.proNo = proNo;
+    }
+
+    public int getProType() {
+        return proType;
+    }
+
+    public void setProType(int proType) {
+        this.proType = proType;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public int getProPricingPrice() {
+        return proPricingPrice;
+    }
+
+    public void setProPricingPrice(int proPricingPrice) {
+        this.proPricingPrice = proPricingPrice;
+    }
+
+    public int getProState() {
+        return proState;
+    }
+
+    public void setProState(int proState) {
+        this.proState = proState;
+    }
+
+    public String getProNote() {
+        return proNote;
+    }
+
+    public void setProNote(String proNote) {
+        this.proNote = proNote;
+    }
+
+    public String getMaintainedBy() {
+        return maintainedBy;
+    }
+
+    public void setMaintainedBy(String maintainedBy) {
+        this.maintainedBy = maintainedBy;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}

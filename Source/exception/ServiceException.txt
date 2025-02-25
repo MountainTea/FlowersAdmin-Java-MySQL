@@ -1,0 +1,14 @@
+package exception;
+
+public class ServiceException extends Exception {
+
+    // 以指定的錯誤訊息建立 ServiceException
+    public ServiceException(String message) {
+        super(message);
+    }
+
+    // 以指定的錯誤訊息與原因建立 ServiceException
+    public ServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

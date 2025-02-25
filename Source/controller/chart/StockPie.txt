@@ -1,0 +1,45 @@
+庫存比例圖
+package controller.chart;
+
+List<VInventoryCombined> dataList;
+try {
+    dataList = inventoryDao.findAll();
+} catch (ServiceException e) {
+    dataList = null;
+}
+
+// 建立資料集，僅計算上架產品的現有庫存，依產品名稱進行累加
+DefaultPieDataset dataset = new DefaultPieDataset();
+Map<String, Integer> stockMap = new HashMap<>();
+if (dataList != null) {
+    for (VInventoryCombined vic : dataList) {
+        if (vic.getProState() == 1) {
+            String productName = vic.getProName();
+            int current = stockMap.getOrDefault(productName, 0);
+            stockMap.put(productName, current + vic.getStockActual());
+        }
+    }
+}
+for (Map.Entry<String, Integer> entry : stockMap.entrySet()) {
+    dataset.setValue(entry.getKey(), entry.getValue());
+}
+
+// 產生圓餅圖並設定中文字型、標籤格式
+JFreeChart chart = ChartFactory.createPieChart(
+        "商品庫存分佈",  
+        dataset,
+        true,
+        true,
+        false
+);
+chart.getTitle().setFont(new Font("微軟正黑體", Font.BOLD, 16));
+chart.getLegend().setItemFont(new Font("微軟正黑體", Font.PLAIN, 12));
+
+PiePlot plot = (PiePlot) chart.getPlot();
+plot.setLabelFont(new Font("微軟正黑體", Font.PLAIN, 12));
+plot.setSimpleLabels(false);
+plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+        "{0}: {1}",
+        new DecimalFormat("0"),
+        new DecimalFormat("0%")
+));

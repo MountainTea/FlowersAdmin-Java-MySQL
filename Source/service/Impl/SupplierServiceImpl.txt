@@ -1,0 +1,52 @@
+package service.impl;
+
+import dao.SupplierDao;
+import dao.impl.SupplierDaoImpl;
+import exception.ServiceException;
+import model.Supplier;
+import service.SupplierService;
+
+import java.util.List;
+
+public class SupplierServiceImpl implements SupplierService {
+
+    private SupplierDao supplierDao;
+
+    public SupplierServiceImpl() {
+        this.supplierDao = new SupplierDaoImpl();
+    }
+
+    public SupplierServiceImpl(SupplierDao supplierDao) {
+        this.supplierDao = supplierDao;
+    }
+
+    @Override
+    public List<Supplier> getAllSuppliers() throws ServiceException {
+        return supplierDao.getAllSuppliers();
+    }
+
+    @Override
+    public Supplier getSupplierById(int id) throws ServiceException {
+        return supplierDao.getSupplierById(id);
+    }
+
+    @Override
+    public Supplier getSupplierByNo(String supNo) throws ServiceException {
+        return supplierDao.getSupplierByNo(supNo);
+    }
+
+    @Override
+    public boolean addSupplier(Supplier supplier) throws ServiceException {
+        return supplierDao.insertSupplier(supplier);
+    }
+
+    @Override
+    public boolean updateSupplier(Supplier supplier) throws ServiceException {
+        return supplierDao.updateSupplier(supplier);
+    }
+
+    @Override
+    public boolean removeSupplier(int id) throws ServiceException {
+        return supplierDao.deleteSupplier(id);
+    }
+}

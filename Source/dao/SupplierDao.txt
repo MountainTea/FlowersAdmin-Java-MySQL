@@ -1,0 +1,21 @@
+package dao;
+
+import exception.ServiceException;
+import model.Supplier;
+import java.util.List;
+
+public interface SupplierDao {
+    /* Read */
+    List<Supplier> getAllSuppliers() throws ServiceException;
+    Supplier getSupplierById(int id) throws ServiceException;
+    Supplier getSupplierByNo(String supNo) throws ServiceException;
+
+    /* Create */
+    boolean insertSupplier(Supplier supplier) throws ServiceException;
+
+    /* Update */
+    boolean updateSupplier(Supplier supplier) throws ServiceException;
+
+    /* Delete */
+    boolean deleteSupplier(int id) throws ServiceException;
+}

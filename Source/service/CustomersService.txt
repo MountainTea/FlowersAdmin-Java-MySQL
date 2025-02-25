@@ -1,0 +1,21 @@
+package service;
+
+import java.util.List;
+import exception.ServiceException;
+import model.Customers;
+
+public interface CustomersService {
+    /* Read */
+    List<Customers> getAllCustomers() throws ServiceException;
+    Customers getCustomersById(int id) throws ServiceException;
+    Customers getCustomersByUsername(String cusUsername) throws ServiceException;
+    
+    /* Create */
+    boolean addCustomers(Customers customers) throws ServiceException;
+    
+    /* Update */
+    boolean updateCustomers(Customers customers) throws ServiceException;
+    
+    /* Delete */
+    boolean removeCustomers(int id) throws ServiceException;
+}

@@ -1,0 +1,23 @@
+訂單明細編輯
+package controller.member.OrderForm;
+
+// 按鈕
+btnBack = new JButton("返回");
+btnBack.addActionListener(e -> {
+    confirmed = false;
+    dispose();
+});
+btnPanel.add(btnBack);
+
+btnNext = new JButton("下一步");
+btnNext.addActionListener(e -> onNext());
+btnPanel.add(btnNext);
+
+private void onNext() {
+    if (orderData.getDetailList().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "請至少新增一筆訂單明細");
+        return;
+    }
+    confirmed = true;
+    dispose();
+}

@@ -1,0 +1,89 @@
+訂單確認
+package controller.member.OrderForm;
+
+// 按鈕
+btnBack = new JButton("返回修改");
+btnBack.addActionListener(e -> {
+    confirmed = false;
+    dispose();
+});
+btnPanel.add(btnBack);
+
+btnConfirm = new JButton("確定下單");
+btnConfirm.addActionListener(e -> onConfirm());
+btnPanel.add(btnConfirm);
+
+
+private void onConfirm() {
+    int choice = JOptionPane.showConfirmDialog(
+        this,
+        "確認要下單嗎？\n(下單後將無法修改)",
+        "確認下單",
+        JOptionPane.YES_NO_OPTION
+    );
+    if (choice != JOptionPane.YES_OPTION) {
+        return;
+    }
+    
+    try {
+        OutboundOrder order = new OutboundOrder();
+        order.setCusUsername(orderData.getCusUsername());
+        order.setCusName(orderData.getCusName());
+        order.setCusPhone(orderData.getCusPhone());
+        order.setCusAddress(orderData.getCusAddress());
+        order.setOrderDate(orderData.getOrderDate());
+        order.setNote(orderData.getNote());
+        
+        int total = 0;
+        for (OrderDetailData d : orderData.getDetailList()) {
+            total += d.getUnitPrice() * d.getQuantity();
+        }
+        order.setTotalAmount(total);
+        order.setShipStatus(0);
+        
+        OutboundOrderService orderService = new OutboundOrderServiceImpl();
+        String outNo = orderService.getNextOutNo(orderData.getOrderDate());
+        order.setOutNo(outNo);
+        
+        boolean headerInserted = orderService.addOutboundOrder(order);
+        if (!headerInserted) {
+            JOptionPane.showMessageDialog(this, "新增訂單列表失敗，請重試！");
+            return;
+        }
+        
+        OutboundDetailService detailService = new OutboundDetailServiceImpl();
+        boolean allDetailsInserted = true;
+        for (OrderDetailData d : orderData.getDetailList()) {
+            OutboundDetail detail = new OutboundDetail();
+            detail.setOutNo(outNo);
+            detail.setProNo(d.getProNo());
+            detail.setProName(d.getProName());
+            detail.setUnitPrice(d.getUnitPrice());
+            detail.setQuantity(d.getQuantity());
+            detail.setNote(d.getNote());
+            boolean inserted = false;
+            if (detailService instanceof OutboundDetailServiceImpl) {
+                inserted = ((OutboundDetailServiceImpl) detailService).addOutboundDetailNoProName(detail);
+            } else {
+                inserted = detailService.addOutboundDetail(detail);
+            }
+            if (!inserted) {
+                allDetailsInserted = false;
+                break;
+            }
+        }
+        
+        if (!allDetailsInserted) {
+            JOptionPane.showMessageDialog(this, "新增訂單明細失敗，請重試！");
+            return;
+        }
+        
+        confirmed = true;
+        JOptionPane.showMessageDialog(this, "下單成功！");
+        dispose();
+        
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "下單時發生錯誤: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+}

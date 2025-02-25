@@ -1,0 +1,32 @@
+訂單基本資料確認
+package controller.member.OrderForm;
+
+// 按鈕
+btnNext = new JButton("下一步");
+btnNext.addActionListener(e -> onNext());
+panel.add(btnNext);
+
+btnCancel = new JButton("取消");
+btnCancel.addActionListener(e -> {
+    confirmed = false;
+    dispose();
+});
+panel.add(btnCancel);
+
+
+private void onNext() {
+    if (txtOrderDate.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "請選擇寄貨日期");
+        return;
+    }
+    try {
+        Date date = new SimpleDateFormat("yyyy/MM/dd").parse(txtOrderDate.getText().trim());
+        orderData.setOrderDate(date);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "日期格式錯誤: " + ex.getMessage());
+        return;
+    }
+    orderData.setNote(txtNote.getText().trim());
+    confirmed = true;
+    dispose();
+}

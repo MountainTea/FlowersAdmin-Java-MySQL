@@ -1,0 +1,128 @@
+package service.impl;
+
+import dao.OutboundDetailDao;
+import dao.impl.OutboundDetailDaoImpl;
+import exception.ServiceException;
+import java.util.List;
+import model.OutboundDetail;
+import service.OutboundDetailService;
+
+public class OutboundDetailServiceImpl implements OutboundDetailService {
+
+    private OutboundDetailDao outboundDetailDao;
+    
+    public OutboundDetailServiceImpl() {
+        this.outboundDetailDao = new OutboundDetailDaoImpl();
+    }
+    
+    public OutboundDetailServiceImpl(OutboundDetailDao outboundDetailDao) {
+        this.outboundDetailDao = outboundDetailDao;
+    }
+    
+    @Override
+    public List<OutboundDetail> getAllOutboundDetails() throws ServiceException {
+        try {
+            return outboundDetailDao.getAllOutboundDetails();
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving all outbound details", e);
+        }
+    }
+    
+    @Override
+    public OutboundDetail getOutboundDetailById(int id) throws ServiceException {
+        try {
+            return outboundDetailDao.getOutboundDetailById(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving outbound detail by id: " + id, e);
+        }
+    }
+    
+    @Override
+    public List<OutboundDetail> getOutboundDetailsByHeaderNo(String outNo) throws ServiceException {
+        try {
+            return outboundDetailDao.getOutboundDetailsByHeaderNo(outNo);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving outbound details for out_no: " + outNo, e);
+        }
+    }
+    
+    @Override
+    public boolean addOutboundDetail(OutboundDetail outboundDetail) throws ServiceException {
+        try {
+            return outboundDetailDao.insertOutboundDetail(outboundDetail);
+        } catch (Exception e) {
+            throw new ServiceException("Error adding outbound detail", e);
+        }
+    }
+    
+
+    public boolean addOutboundDetailFixed(OutboundDetail outboundDetail) throws ServiceException {
+        try {
+            if (outboundDetailDao instanceof dao.impl.OutboundDetailDaoImpl) {
+                return ((dao.impl.OutboundDetailDaoImpl) outboundDetailDao).insertOutboundDetailFixed(outboundDetail);
+            } else {
+                return outboundDetailDao.insertOutboundDetail(outboundDetail);
+            }
+        } catch (Exception e) {
+            throw new ServiceException("Error adding outbound detail with fix", e);
+        }
+    }
+
+    
+    public boolean addOutboundDetailNoProName(OutboundDetail outboundDetail) throws ServiceException {
+        try {
+            if (outboundDetailDao instanceof dao.impl.OutboundDetailDaoImpl) {
+                return ((dao.impl.OutboundDetailDaoImpl) outboundDetailDao)
+                        .insertOutboundDetailNoProName(outboundDetail);
+            } else {
+                return outboundDetailDao.insertOutboundDetail(outboundDetail);
+            }
+        } catch (Exception e) {
+            throw new ServiceException("Error adding outbound detail (no pro_name)", e);
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    @Override
+    public boolean updateOutboundDetail(OutboundDetail outboundDetail) throws ServiceException {
+        try {
+            return outboundDetailDao.updateOutboundDetail(outboundDetail);
+        } catch (Exception e) {
+            throw new ServiceException("Error updating outbound detail with id: " + outboundDetail.getId(), e);
+        }
+    }
+    
+
+    public boolean updateOutboundDetailNoProName(OutboundDetail outboundDetail) throws ServiceException {
+        try {
+            if (outboundDetailDao instanceof OutboundDetailDaoImpl) {
+                return ((OutboundDetailDaoImpl) outboundDetailDao)
+                        .updateOutboundDetailNoProName(outboundDetail);
+            } else {
+                return outboundDetailDao.updateOutboundDetail(outboundDetail);
+            }
+        } catch (Exception e) {
+            throw new ServiceException("Error updating outbound detail (no pro_name)", e);
+        }
+    }
+
+  
+    
+    
+    @Override
+    public boolean removeOutboundDetail(int id) throws ServiceException {
+        try {
+            return outboundDetailDao.deleteOutboundDetail(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error deleting outbound detail with id: " + id, e);
+        }
+    }
+}
+
+

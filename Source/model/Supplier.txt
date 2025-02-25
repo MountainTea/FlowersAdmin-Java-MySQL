@@ -1,0 +1,135 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class Supplier {
+    private int id;
+    private String supNo;           // 供應商編號 (統一編號)
+    private String supName;
+    private String supPhone;
+    private String supAddress;
+    private int supState;           // 0=停用,1=使用中
+    private String supNote;
+    private String maintainedBy;    
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private String contactPerson;  
+    private String contactEmail;    
+
+    public Supplier() {}
+
+    public Supplier(int id, String supNo, String supName, String supPhone, String supAddress, int supState,
+                    String supNote, String maintainedBy, Timestamp createdAt, Timestamp updatedAt,
+                    String contactPerson, String contactEmail) {
+        this.id = id;
+        this.supNo = supNo;
+        this.supName = supName;
+        this.supPhone = supPhone;
+        this.supAddress = supAddress;
+        this.supState = supState;
+        this.supNote = supNote;
+        this.maintainedBy = maintainedBy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.contactPerson = contactPerson;
+        this.contactEmail = contactEmail;
+    }
+
+    // Getter and Setter methods
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }  
+
+    public String getSupNo() {
+        return supNo;
+    }
+
+    public void setSupNo(String supNo) {
+        this.supNo = supNo;
+    }
+
+    public String getSupName() {
+        return supName;
+    }
+
+    public void setSupName(String supName) {
+        this.supName = supName;
+    }
+
+    public String getSupPhone() {
+        return supPhone;
+    }
+
+    public void setSupPhone(String supPhone) {
+        this.supPhone = supPhone;
+    }
+
+    public String getSupAddress() {
+        return supAddress;
+    }
+
+    public void setSupAddress(String supAddress) {
+        this.supAddress = supAddress;
+    }
+
+    public int getSupState() {
+        return supState;
+    }
+
+    public void setSupState(int supState) {
+        this.supState = supState;
+    }
+
+    public String getSupNote() {
+        return supNote;
+    }
+
+    public void setSupNote(String supNote) {
+        this.supNote = supNote;
+    }
+
+    public String getMaintainedBy() {
+        return maintainedBy;
+    }
+
+    public void setMaintainedBy(String maintainedBy) {
+        this.maintainedBy = maintainedBy;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public String getContactPerson() {
+        return contactPerson;
+    }
+    
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+    
+    public String getContactEmail() {
+        return contactEmail;
+    }
+    
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+}

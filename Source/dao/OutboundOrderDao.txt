@@ -1,0 +1,21 @@
+package dao;
+
+import exception.ServiceException;
+import model.OutboundOrder;
+import java.util.List;
+
+public interface OutboundOrderDao {
+    /* Read */
+    List<OutboundOrder> getAllOutboundOrders() throws ServiceException;
+    OutboundOrder getOutboundOrderByNo(String outNo) throws ServiceException;
+    String getNextOutNo(java.util.Date orderDate) throws ServiceException;
+
+    /* Create */
+    boolean insertOutboundOrder(OutboundOrder outboundOrder) throws ServiceException;
+
+    /* Update */
+    boolean updateOutboundOrder(OutboundOrder outboundOrder) throws ServiceException;
+
+    /* Delete */
+    boolean deleteOutboundOrder(String outNo) throws ServiceException;
+}

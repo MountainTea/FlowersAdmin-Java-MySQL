@@ -1,0 +1,78 @@
+package service.impl;
+
+import dao.AdminersDao;
+import dao.impl.AdminersDaoImpl;
+import exception.ServiceException;
+import java.util.List;
+import model.Adminers;
+import service.AdminersService;
+
+public class AdminersServiceImpl implements AdminersService {
+    
+
+    private AdminersDao adminersDao;
+    
+
+    public AdminersServiceImpl() {
+        this.adminersDao = new AdminersDaoImpl();
+    }
+    
+
+    public AdminersServiceImpl(AdminersDao adminersDao) {
+        this.adminersDao = adminersDao;
+    }
+    
+    @Override
+    public List<Adminers> getAllAdminers() throws ServiceException {
+        try {
+            return adminersDao.getAllAdminers();
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving all adminers", e);
+        }
+    }
+
+    @Override
+    public Adminers getAdminersById(int id) throws ServiceException {
+        try {
+            return adminersDao.getAdminersById(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving adminers by id: " + id, e);
+        }
+    }
+
+    @Override
+    public Adminers getAdminersByUsername(String admUsername) throws ServiceException {
+        try {
+            return adminersDao.getAdminersByUsername(admUsername);
+        } catch (Exception e) {
+            throw new ServiceException("Error retrieving adminers by username: " + admUsername, e);
+        }
+    }
+
+    @Override
+    public boolean addAdminers(Adminers adminers) throws ServiceException {
+        try {
+            return adminersDao.insertAdminers(adminers);
+        } catch (Exception e) {
+            throw new ServiceException("Error adding new adminers", e);
+        }
+    }
+
+    @Override
+    public boolean updateAdminers(Adminers adminers) throws ServiceException {
+        try {
+            return adminersDao.updateAdminers(adminers);
+        } catch (Exception e) {
+            throw new ServiceException("Error updating adminers with id: " + adminers.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean removeAdminers(int id) throws ServiceException {
+        try {
+            return adminersDao.deleteAdminers(id);
+        } catch (Exception e) {
+            throw new ServiceException("Error deleting adminers with id: " + id, e);
+        }
+    }
+}

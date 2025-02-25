@@ -1,0 +1,22 @@
+package service;
+
+import java.util.List;
+import exception.ServiceException;
+import model.InboundOrder;
+
+public interface InboundOrderService {
+    /* Read */
+    List<InboundOrder> getAllInboundOrders() throws ServiceException;
+    InboundOrder getInboundOrderById(int id) throws ServiceException;
+    InboundOrder getInboundOrderByNo(String inbNo) throws ServiceException;
+    String getNextInbNo() throws ServiceException;
+    
+    /* Create */
+    boolean addInboundOrder(InboundOrder inboundOrder) throws ServiceException;
+    
+    /* Update */
+    boolean updateInboundOrder(InboundOrder inboundOrder) throws ServiceException;
+    
+    /* Delete */
+    boolean removeInboundOrder(int id) throws ServiceException;
+}

@@ -1,0 +1,27 @@
+進貨管理
+package controller.admin;
+
+// 新增
+btnAdd = new JButton("新增");
+btnAdd.addActionListener(e -> onAdd());
+btnPanel.add(btnAdd);
+
+// 修改
+btnEdit = new JButton("修改");
+btnEdit.addActionListener(e -> onEdit());
+btnPanel.add(btnEdit);
+
+// 刪除
+btnDelete = new JButton("刪除");
+btnDelete.addActionListener(e -> onDelete());
+btnPanel.add(btnDelete);
+
+// 檢視/編輯明細
+btnDetail = new JButton("檢視/編輯明細");
+btnDetail.addActionListener(e -> onDetail());
+btnPanel.add(btnDetail);
+
+// 返回
+btnBack = new JButton("返回");
+btnBack.addActionListener(e -> onBack());
+btnPanel.add(btnBack);

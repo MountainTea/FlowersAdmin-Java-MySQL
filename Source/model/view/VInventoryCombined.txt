@@ -1,0 +1,80 @@
+package model.view;
+
+public class VInventoryCombined {
+    private int proState;
+    private int proType;
+    private String proNo;
+    private String proName;
+    private int totalInbound;
+    private int totalOutboundSimulated;
+    private int totalOutboundActual;
+    private int stockSimulated;
+    private int stockActual;
+
+    public VInventoryCombined() {}
+
+    // Getter & Setter
+
+    public int getProState() {
+        return proState;
+    }
+    public void setProState(int proState) {
+        this.proState = proState;
+    }
+
+    public int getProType() {
+        return proType;
+    }
+    public void setProType(int proType) {
+        this.proType = proType;
+    }
+
+    public String getProNo() {
+        return proNo;
+    }
+    public void setProNo(String proNo) {
+        this.proNo = proNo;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public int getTotalInbound() {
+        return totalInbound;
+    }
+    public void setTotalInbound(int totalInbound) {
+        this.totalInbound = totalInbound;
+    }
+
+    public int getTotalOutboundSimulated() {
+        return totalOutboundSimulated;
+    }
+    public void setTotalOutboundSimulated(int totalOutboundSimulated) {
+        this.totalOutboundSimulated = totalOutboundSimulated;
+    }
+
+    public int getTotalOutboundActual() {
+        return totalOutboundActual;
+    }
+    public void setTotalOutboundActual(int totalOutboundActual) {
+        this.totalOutboundActual = totalOutboundActual;
+    }
+
+    public int getStockSimulated() {
+        return stockSimulated;
+    }
+    public void setStockSimulated(int stockSimulated) {
+        this.stockSimulated = stockSimulated;
+    }
+
+    public int getStockActual() {
+        return stockActual;
+    }
+    public void setStockActual(int stockActual) {
+        this.stockActual = stockActual;
+    }
+}

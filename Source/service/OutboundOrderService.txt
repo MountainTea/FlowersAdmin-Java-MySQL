@@ -1,0 +1,25 @@
+package service;
+
+import exception.ServiceException;
+import model.OutboundOrder;
+import model.OutboundDetail;
+import java.util.Date;
+import java.util.List;
+
+public interface OutboundOrderService {
+    /* Read */
+    List<OutboundOrder> getAllOutboundOrders() throws ServiceException;
+    OutboundOrder getOutboundOrderById(int id) throws ServiceException;
+    OutboundOrder getOutboundOrderByNo(String outNo) throws ServiceException;
+    String getNextOutNo(Date orderDate) throws ServiceException;
+    List<OutboundDetail> getOutboundDetailsByOutNo(String outNo) throws Exception;
+    
+    /* Create */
+    boolean addOutboundOrder(OutboundOrder outboundOrder) throws ServiceException;
+    
+    /* Update */
+    boolean updateOutboundOrder(OutboundOrder outboundOrder) throws ServiceException;
+    
+    /* Delete */
+    boolean removeOutboundOrderByNo(String outNo) throws ServiceException;
+}

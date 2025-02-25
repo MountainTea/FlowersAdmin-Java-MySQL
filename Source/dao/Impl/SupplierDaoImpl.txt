@@ -1,0 +1,138 @@
+package dao.impl;
+
+import dao.SupplierDao;
+import exception.ServiceException;
+import model.Supplier;
+import util.DbConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SupplierDaoImpl implements SupplierDao {
+
+    @Override
+    public List<Supplier> getAllSuppliers() throws ServiceException {
+        List<Supplier> list = new ArrayList<>();
+        String sql = "SELECT * FROM suppliers";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(mapRowToSupplier(rs));
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving all suppliers", e);
+        }
+        return list;
+    }
+
+    @Override
+    public Supplier getSupplierById(int id) throws ServiceException {
+        String sql = "SELECT * FROM suppliers WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRowToSupplier(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving supplier by id: " + id, e);
+        }
+        return null;
+    }
+
+    @Override
+    public Supplier getSupplierByNo(String supNo) throws ServiceException {
+        String sql = "SELECT * FROM suppliers WHERE sup_no = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, supNo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRowToSupplier(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Error retrieving supplier by supNo: " + supNo, e);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean insertSupplier(Supplier supplier) throws ServiceException {
+        String sql = "INSERT INTO suppliers (sup_no, sup_name, sup_phone, sup_address, sup_state, sup_note, maintained_by, created_at, contact_person, contact_email) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, supplier.getSupNo());
+            ps.setString(2, supplier.getSupName());
+            ps.setString(3, supplier.getSupPhone());
+            ps.setString(4, supplier.getSupAddress());
+            ps.setInt(5, supplier.getSupState());
+            ps.setString(6, supplier.getSupNote());
+            ps.setString(7, supplier.getMaintainedBy());
+            ps.setString(8, supplier.getContactPerson());
+            ps.setString(9, supplier.getContactEmail());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error inserting new supplier", e);
+        }
+    }
+
+    @Override
+    public boolean updateSupplier(Supplier supplier) throws ServiceException {
+        String sql = "UPDATE suppliers SET sup_no = ?, sup_name = ?, sup_phone = ?, sup_address = ?, " +
+                     "sup_state = ?, sup_note = ?, maintained_by = ?, updated_at = CURRENT_TIMESTAMP, " +
+                     "contact_person = ?, contact_email = ? " +
+                     "WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, supplier.getSupNo());
+            ps.setString(2, supplier.getSupName());
+            ps.setString(3, supplier.getSupPhone());
+            ps.setString(4, supplier.getSupAddress());
+            ps.setInt(5, supplier.getSupState());
+            ps.setString(6, supplier.getSupNote());
+            ps.setString(7, supplier.getMaintainedBy());
+            ps.setString(8, supplier.getContactPerson());
+            ps.setString(9, supplier.getContactEmail());
+            ps.setInt(10, supplier.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error updating supplier with id: " + supplier.getId(), e);
+        }
+    }
+
+    @Override
+    public boolean deleteSupplier(int id) throws ServiceException {
+        String sql = "DELETE FROM suppliers WHERE id = ?";
+        try (Connection conn = DbConnection.getDb();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new ServiceException("Error deleting supplier with id: " + id, e);
+        }
+    }
+
+    private Supplier mapRowToSupplier(ResultSet rs) throws SQLException {
+        Supplier s = new Supplier();
+        s.setId(rs.getInt("id"));
+        s.setSupNo(rs.getString("sup_no"));
+        s.setSupName(rs.getString("sup_name"));
+        s.setSupPhone(rs.getString("sup_phone"));
+        s.setSupAddress(rs.getString("sup_address"));
+        s.setSupState(rs.getInt("sup_state"));
+        s.setSupNote(rs.getString("sup_note"));
+        s.setMaintainedBy(rs.getString("maintained_by"));
+        s.setCreatedAt(rs.getTimestamp("created_at"));
+        s.setUpdatedAt(rs.getTimestamp("updated_at"));
+        s.setContactPerson(rs.getString("contact_person"));
+        s.setContactEmail(rs.getString("contact_email"));
+        return s;
+    }
+}

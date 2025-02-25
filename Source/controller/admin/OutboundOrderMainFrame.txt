@@ -1,0 +1,32 @@
+出貨單管理
+package controller.admin;
+
+// 新增訂單
+btnNew = new JButton("新增訂單");
+btnNew.addActionListener(e -> onNew());
+btnPanel.add(btnNew);
+
+// 修改訂單
+btnEdit = new JButton("修改訂單");
+btnEdit.addActionListener(e -> onEdit());
+btnPanel.add(btnEdit);
+
+// 刪除訂單
+btnDelete = new JButton("刪除訂單");
+btnDelete.addActionListener(e -> onDelete());
+btnPanel.add(btnDelete);
+
+// 檢視/編輯訂單明細
+btnDetail = new JButton("檢視/編輯訂單明細");
+btnDetail.addActionListener(e -> onDetail());
+btnPanel.add(btnDetail);
+
+// 匯出出貨單
+btnExportWord = new JButton("匯出出貨單");
+btnExportWord.addActionListener(e -> onExportWord());
+btnPanel.add(btnExportWord);
+
+// 返回
+btnBack = new JButton("返回");
+btnBack.addActionListener(e -> onBack());
+btnPanel.add(btnBack);

@@ -1,0 +1,22 @@
+package dao;
+
+import exception.ServiceException;
+import model.InboundOrder;
+import java.util.List;
+
+public interface InboundOrderDao {
+    /* Read */
+    List<InboundOrder> getAllInboundOrders() throws ServiceException;
+    InboundOrder getInboundOrderById(int id) throws ServiceException;
+    InboundOrder getInboundOrderByNo(String inbNo) throws ServiceException;
+    String getNextInbNo() throws ServiceException;
+
+    /* Create */
+    boolean insertInboundOrder(InboundOrder inboundOrder) throws ServiceException;
+
+    /* Update */
+    boolean updateInboundOrder(InboundOrder inboundOrder) throws ServiceException;
+
+    /* Delete */
+    boolean deleteInboundOrder(int id) throws ServiceException;
+}

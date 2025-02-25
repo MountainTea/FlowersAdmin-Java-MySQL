@@ -1,0 +1,25 @@
+會員首頁
+package controller.member;
+
+// 登出
+btnLogout = new JButton("登出");
+btnLogout.addActionListener(e -> {
+    AppContext.logout();
+    new Login().setVisible(true);
+    dispose();
+});
+add(btnLogout);
+
+// 修改資料
+btnEditInfo = new JButton("修改資料");
+btnEditInfo.addActionListener(e -> {
+    JOptionPane.showMessageDialog(this, "目前不開放會員修改，請洽客服：(02)1234-5678 轉 0");
+});
+add(btnEditInfo);
+
+// 我的訂單
+btnMyOrders = new JButton("我的訂單");
+btnMyOrders.addActionListener(e -> {
+    new MyOrdersFrame(AppContext.currentCustomer).setVisible(true);
+});
+add(btnMyOrders);
