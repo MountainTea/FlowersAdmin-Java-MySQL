@@ -22,7 +22,7 @@ flowersadmin/
     │   │       Register.java      (會員註冊)
     │   │       Home.java          (會員首頁)
     │   │       MyOrdersFrame.java (我的訂單列表)
-    │   │       orderform/       [訂單流程]
+    │   │       orderform/       [下單流程]
     │   │             MemberOrderDetailDialog.java (會員訂單明細)
     │   │             Step1Basic.java              (訂單基本資料確認)
     │   │             Step2Detail.java             (訂單明細編輯)
