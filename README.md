@@ -22,6 +22,29 @@
   
 ## 專案結構  
 
+ ```SQL
+flowersadmin
+├── Tables
+│   ├── adminers (管理者)
+│   ├── customers (顧客)
+│   ├── inbound_detail (進貨單明細)
+│   ├── inbound_header (進貨單)
+│   ├── outbound_detail (出貨單明細)
+│   ├── outbound_header (出貨單)
+│   ├── products (產品)
+│   ├── suppliers (廠商)
+│   └── routines (例行程式)
+└── Views
+    ├── v_inbound_detail (進貨明細檢視)
+    ├── v_inbound_header_summary (進貨單摘要檢視)
+    ├── v_inventory_combined (庫存彙整檢視)
+    ├── v_outbound_detail (出貨明細檢視)
+    └── v_outbound_summary (出貨摘要檢視)
+ ```
+
+
+
+
  ```JAVA
 flowersadmin/
 └── src/
