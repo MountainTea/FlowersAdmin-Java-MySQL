@@ -22,7 +22,7 @@
   
 ## 專案結構  
 
- ```SQL
+ ```mysql
 flowersadmin
 ├── Tables
 │   ├── adminers (管理者)
