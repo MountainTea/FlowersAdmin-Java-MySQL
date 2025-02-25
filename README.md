@@ -7,6 +7,16 @@
 
   詳細介紹請參考 [簡易說明書(.PDF)](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/pptpdf/%E7%B0%A1%E6%98%93%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf "簡易說明書.pdf")
 
+
+
+
+## 技術
+- ### **程式語言：** Java  
+- ### **UI 技術：** Java Swing  
+- ### **資料庫：** MySQL
+- ### **開發環境：** Eclipse IDE for Java Developers (2024-12)
+
+
   
   
 專案結構
