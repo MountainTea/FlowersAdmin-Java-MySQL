@@ -26,21 +26,18 @@
  ```mysql
 flowersadmin
 ├── Tables
-│   ├── adminers (管理者)
-│   ├── customers (顧客)
+│   ├── adminers (員工列表)
+│   ├── customers (顧客列表)
 │   ├── inbound_detail (進貨單明細)
 │   ├── inbound_header (進貨單)
 │   ├── outbound_detail (出貨單明細)
 │   ├── outbound_header (出貨單)
-│   ├── products (產品)
-│   ├── suppliers (廠商)
-│   └── routines (例行程式)
+│   ├── products (產品列表)
+│   ├── suppliers (供應商列表)
 └── Views
     ├── v_inbound_detail (進貨明細檢視)
-    ├── v_inbound_header_summary (進貨單摘要檢視)
-    ├── v_inventory_combined (庫存彙整檢視)
     ├── v_outbound_detail (出貨明細檢視)
-    └── v_outbound_summary (出貨摘要檢視)
+    ├── v_inventory_combined (庫存彙整檢視)
  ```
 
 
