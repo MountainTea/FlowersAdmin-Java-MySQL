@@ -1,0 +1,62 @@
+CREATE DATABASE  IF NOT EXISTS `flowersadmin` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `flowersadmin`;
+-- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
+--
+-- Host: localhost    Database: flowersadmin
+-- ------------------------------------------------------
+-- Server version	8.0.41
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `inbound_detail`
+--
+
+DROP TABLE IF EXISTS `inbound_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inbound_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inb_no` varchar(50) NOT NULL,
+  `pro_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `unit_price` int NOT NULL DEFAULT '0',
+  `quantity` int NOT NULL DEFAULT '1',
+  `note` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_inb_header_id` (`inb_no`),
+  KEY `idx_pro_no` (`pro_no`),
+  CONSTRAINT `fk_inbound_detail_inb_no` FOREIGN KEY (`inb_no`) REFERENCES `inbound_header` (`inb_no`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inbound_detail`
+--
+
+LOCK TABLES `inbound_detail` WRITE;
+/*!40000 ALTER TABLE `inbound_detail` DISABLE KEYS */;
+INSERT INTO `inbound_detail` VALUES (3,'inb20250218001','pro001',400,1,'單品進貨','2025-02-18 06:33:16','2025-02-24 02:51:37'),(4,'inb20250218001','pro002',50,1,'補充花泥','2025-02-18 06:33:16','2025-02-24 02:54:15'),(5,'inb20250218001','pro010',60,1,'蕨類','2025-02-18 06:33:16','2025-02-24 02:54:15'),(6,'inb20250218001','pro003',150,2,'','2025-02-18 06:33:16','2025-02-25 15:00:31'),(7,'inb20250218001','pro011',90,1,'','2025-02-23 14:12:03','2025-02-24 05:24:10'),(8,'inb20250223001','pro001',350,1,'新鮮的可以二周','2025-02-23 15:01:46','2025-02-24 02:51:37'),(9,'inb20250223001','pro004',100,5,'','2025-02-23 15:01:56','2025-02-25 15:00:52'),(10,'inb20250224001','pro002',200,4,'','2025-02-23 16:30:13','2025-02-24 03:39:59'),(11,'inb20250224002','pro004',99,1,'','2025-02-24 03:36:55',NULL),(12,'inb20250224002','pro001',500,13,'補玫瑰、留一當庫存','2025-02-24 03:37:39',NULL),(13,'inb20250224001','pro005',300,4,'','2025-02-24 03:40:08',NULL),(14,'inb20250224001','pro008',200,4,'','2025-02-24 03:40:17',NULL),(15,'inb20250225001','pro004',150,7,'','2025-02-25 02:15:16',NULL),(16,'inb20250225001','pro010',200,10,'','2025-02-25 02:15:49',NULL),(17,'inb20250224002','pro006',200,1,'','2025-02-25 15:01:23',NULL),(18,'inb20250224002','pro010',200,9,'','2025-02-25 15:01:31',NULL),(19,'inb20250224001','pro009',500,2,'','2025-02-25 15:02:09',NULL);
+/*!40000 ALTER TABLE `inbound_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-02-25 23:05:40
