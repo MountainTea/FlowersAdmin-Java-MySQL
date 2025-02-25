@@ -136,7 +136,7 @@ javac -version
 ```plaintext
 java -version
 ```
-![測試java環境圖例(https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/JavaVersionTest.png "Java Version Test")</a>
+![測試java環境圖例](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/JavaVersionTest.png "Java Version Test")</a>
   
 ---
 
