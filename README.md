@@ -22,6 +22,7 @@
   
 ## 專案結構  
 
+-資料
  ```mysql
 flowersadmin
 ├── Tables
@@ -44,7 +45,7 @@ flowersadmin
 
 
 
-
+-資料
  ```JAVA
 flowersadmin/
 └── src/
