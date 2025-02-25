@@ -5,7 +5,7 @@
 * 數據整合與分析
 *  數位化轉型推動
 
-  詳細介紹請參考PPT
+  詳細介紹請參考 [簡易說明書(.PDF)](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/pptpdf/%E7%B0%A1%E6%98%93%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf "簡易說明書.pdf")
 
   
   
