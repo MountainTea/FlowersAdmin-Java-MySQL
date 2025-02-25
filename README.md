@@ -72,7 +72,7 @@ flowersadmin/
     │           ProductsServiceImpl.java       (產品)
     │           SupplierServiceImpl.java       (廠商)
     │
-    ├── exception/  [自訂]
+    ├── exception/  [自訂異常處理機制]
     │           ServiceException.java
     │
     └── util/  [其他資源]
