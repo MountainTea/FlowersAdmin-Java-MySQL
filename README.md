@@ -7,7 +7,7 @@ Simple flower import and export.
  ```JAVA
 flowersadmin/
 └── src/
-    ├── controller/  [UI]
+    ├── controller/  [UI介面]
     │   ├── admin/  [後臺]
     │   │       AdminHome.java          (後臺首頁)
     │   │       AdminLogin.java         (後臺登入)
