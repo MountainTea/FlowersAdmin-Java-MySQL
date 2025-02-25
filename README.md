@@ -123,9 +123,9 @@ flowersadmin/
  ## 測試環境
 
 - ### **資料庫環境：**  
-請安裝 MySQL（建議使用 [MySQL Community Server](https://dev.mysql.com/downloads/mysql/ "資料庫程式下載")），並匯入提供的 SQL 腳本建立所需的資料表，匯入後若沒有即時看到請對Schemas頁面，空白處按右鍵>選擇Refresh All，重新整理一下畫面。  
-
-  ![資料庫匯入說明圖例](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/%E8%B3%87%E6%96%99%E5%BA%AB%E5%8C%AF%E5%85%A5%E8%AA%AA%E6%98%8E%E5%9C%96.png "Import DatabaseTable")
+1. 請安裝 MySQL（建議使用 [MySQL Community Server](https://dev.mysql.com/downloads/mysql/ "資料庫程式下載")），並匯入提供的 SQL 腳本建立所需的資料表，匯入後若沒有即時看到請對Schemas頁面，空白處按右鍵>選擇Refresh All，重新整理一下畫面。  
+2. 匯入整個資料庫、或匯入全部資料表，請擇一匯入即可。
+  ![資料庫匯入說明圖例](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/%E8%B3%87%E6%96%99%E5%BA%AB%E5%8C%AF%E5%85%A5%E8%AA%AA%E6%98%8E%E5%9C%96.png "Import DatabaseTable")</a>
   
 - ### **JDK環境：**  
 下載並安裝 [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11?er=221886 "JDK程式下載")環境。  
@@ -136,7 +136,7 @@ javac -version
 ```plaintext
 java -version
 ```
-  ![圖2](ExImg/JavaVersionTest.png "Java Version Test")</a>
+![測試java環境圖例(https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/JavaVersionTest.png "Java Version Test")</a>
   
 ---
 
