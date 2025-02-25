@@ -1,5 +1,10 @@
 # FlowersAdmin-Java-MySQL
-Simple flower import and export.  
+這是一套採簡化花商管理流程為出發點，融合多個模組協同運作，實現全面的進出貨、庫存與銷售監控。
+* 直覺式操作介面
+* 模組化架構
+* 數據整合與分析
+*  數位化轉型推動
+
   
   
 專案結構
