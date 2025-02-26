@@ -186,6 +186,8 @@ java -version
   2. 點選「訂單處理」即可看到屬於此所有會員訂購的內容。
   3. 可在此列表進行「未出貨」訂單之 新增、修改、取消功能；至於「已出貨及取消」的訂單由管理員身分才可操作。
   4. 此介面可以列印出貨單(Word)，預設檔案名稱由「"出貨單"+顧客部分編號+姓名+匯出日期」命名。
+
+  ![後臺出貨圖例](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/%E7%B5%84%E5%90%883_%E5%87%BA%E8%B2%A8.png "Backstage Shipping Example")</a>
        
 - ### 後台/庫存管理
   1. 請先登入後台員工介面。(未有帳號請由管理員建構)
