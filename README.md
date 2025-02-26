@@ -168,6 +168,8 @@ java -version
   2. 登入需輸入帳號、密碼及驗證碼；顧客帳號為身分證、員工帳號為E-mail。
   3. 欄位會即時判斷格式。
   4. 可藉由下方「前台登入/後臺登入」按鈕進行介面切換。
+
+  ![前後台燈入及首頁](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/%E7%B5%84%E5%90%882_LOGIN%E3%80%81HOME.png "Front and back stage lights and home page")</a>
        
 - ### 前台/下單
   1. 請先登入會員，並登入至首頁。
