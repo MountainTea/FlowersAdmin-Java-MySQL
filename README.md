@@ -176,6 +176,8 @@ java -version
      A. 步驟一、確認資訊  
      B. 步驟二、選擇商品項目  
      C. 步驟三、再次確認 (可返回步驟二修正)
+
+  ![前台下單圖例](https://github.com/MountainTea/FlowersAdmin-Java-MySQL/blob/main/img/%E7%B5%84%E5%90%881_%E4%B8%8B%E5%96%AE.png "Front desk order example")</a>
        
 - ### 後台/出貨
   1. 請先登入後台員工介面。(未有帳號請由管理員建構)
